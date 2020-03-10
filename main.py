@@ -7,34 +7,37 @@ import os
 
 doc = Document(default_filepath='basic', documentclass='ctexart')
 packages = [["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"]
+define = [[r"\dif"], [r"\text{d}"]]
 
 core = Core(doc, packages)
-core.define(r"\dif", r"\text{d}")
+core.global_define(*define)
 
 fig = Figure(position='h!')
 fig.add_image(os.path.join(os.path.dirname(__file__), "resources/timg.jpg"), width=NoEscape(r'0.8\linewidth'))
 
-core.pre_append(Command('title', NoEscape(fig.dumps() + Command('heiti', 'PyTex示例').dumps())),
-                Command('author', Command('kaishu', 'tczrr1999')),
+core.pre_append(Command('title', Command('heiti', 'PyTex示例')),
+                Command('author', Command('kaishu', '六个骨头')),
                 Command('date', Command('today'))
                 )
 core.body_append(Command('maketitle'))
 core.body_append(NoEscape(r'本试卷分为100分的必答题和10分的选做题，选做题做对加分，做错不扣分，最多累计10分，整卷最高分110分。'))
 
-core.body_append(NoEscape(r"\vspace{10cm}"))
+core.body_append(NoEscape(r"\vspace{20cm}"))
 with doc.create(Center()) as centered:
-    with centered.create(Tabu("X[r] X[r]", spread="1in")) as data_table:
-        data_table.append(NoEscape(r'\bf{姓名}\ \underline{\hbox to 20mm{}}'))
-        data_table.append(NoEscape(r'\bf{学号}\ \underline{\hbox to 20mm{}}'))
-        data_table.append(NoEscape(r'\bf{编号}\ \underline{\hbox to 20mm{}}'))
+    core.body_append(NoEscape(r'\bf{姓名}\ \underline{\hbox to 20mm{}}'))
+    core.body_append(NoEscape(r'\bf{学号}\ \underline{\hbox to 20mm{}}'))
+    core.body_append(NoEscape(r'\bf{编号}\ \underline{\hbox to 20mm{}}'))
 core.body_append(NewPage())
 
 #  ——————————题目内容——————————
 
-# p1 = Question(core, "选择题", "在每小题给出的四个选项中，只有一项是符合题目要求的.", 5)
 p2 = Question(core, name="填空题", describe="", scores=7)
 p3 = Question(core, name="解答题", describe="解答应写出文字说明、证明过程或演算步骤.", line_space=50)
 p4 = Question(core, name="选做题", describe="考生根据心情作答，酌情给分.", line_space=50)
+
+
+# with core.local_define([r"\d "], [r"\text{d}"]) as local_core:
+#     local_core.append(NoEscape(r"$\d2 \d \dx<d>x$"), mode="command")
 
 p2.set(r"设$\alpha \in[0.01,0.98]$, 则"
        r"$\lim_{n \to \infty}\left[(n+1)^{\alpha}-n^{\alpha}\right]=\underline{\hspace*{4em}}$",
@@ -52,6 +55,7 @@ p2.set(r"设$\alpha \in[0.01,0.98]$, 则"
        r"记曲面 $z^2=x^2+y^2$ 和 $z=\sqrt{4-x^2-y^2}$ 围成空间区域为 $V$, "
        r"则三重积分 $\iint_Vz\dif x\dif y\dif z=\underline{\hspace*{4em}}$"
        )
+
 p3.set(r"设二元函数 $f(x,y)$ 在平面上有连续的二阶导数. 对任意角度 $\alpha$, "
        r"定义一元函数\[g_{\alpha}(t)=f(t\cos\alpha,t\sin\alpha).\]"
        r"若对任何 $\alpha$ 都有 $\frac{\dif g_{\alpha}(0)}{\dif t}=0$ "
@@ -69,20 +73,6 @@ p3.set(r"设二元函数 $f(x,y)$ 在平面上有连续的二阶导数. 对任�
        r"若 $\lim_{n\to\infty}\big(a_{n+p}-a_n\big)=\lambda$, "
        r"求证: $\lim_{n\to\infty}\frac{a_n}{n}=\frac{\lambda}{p}$",
        scores=[14, 14, 15, 15]
-       )
-
-x = array([['x'], ['y'], ['z']])
-
-p4.set(r"在求梯度的时候，经常会将$ f(x, y ,z)$简写成$ f(\boldsymbol x) $其中 $\boldsymbol x="
-       f"{x.dumps()}$，使用这种记法，我们可以根据定义很容易证明"
-       r"$\nabla (\boldsymbol x \cdot \boldsymbol x)=2\boldsymbol x$。"
-       r"试证明 \[ \nabla (|| 2\boldsymbol x - \boldsymbol 1 ||^2)=4(2\boldsymbol x - \boldsymbol 1),\] "
-       r"其中$||2\boldsymbol x - \boldsymbol 1||^2=(2\boldsymbol x - \boldsymbol 1)"
-       r" \cdot (2\boldsymbol x - \boldsymbol 1)$，$\boldsymbol "
-       f"1={array([[1], [1], [1]]).dumps()}$.",
-
-       r"请简述人工智能、机器学习和深度学习的关系.",
-       scores=[8, 5]
        )
 
 #  ——————————题目内容——————————
