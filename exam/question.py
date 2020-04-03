@@ -49,4 +49,3 @@ class Question:
                     enum.append(NoEscape(f"\\\\[{line_space}mm]"))
 
         self.core.num += n
-

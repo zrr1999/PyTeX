@@ -1,6 +1,6 @@
-from pylatex import Matrix, Figure, NoEscape
-import numpy as np
 import matplotlib
+import numpy as np
+from pylatex import Matrix, Figure, NoEscape
 
 matplotlib.use('Agg')  # Not to use X server. For TravisCI.
 

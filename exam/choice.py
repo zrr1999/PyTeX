@@ -1,6 +1,5 @@
 from pylatex.base_classes import Environment, Options, Command
 from pylatex.package import Package
-from pylatex import Document, Section
 from pylatex.utils import NoEscape
 
 
@@ -38,4 +37,4 @@ def choice(describe, *items, line_num=4, options=NoEscape(r"counter-format=(tsk[
     co.append(f"({line_num})")
     for item in items:
         co.add_task(NoEscape(item))
-    return NoEscape(describe+co.dumps())
+    return NoEscape(describe + co.dumps())
