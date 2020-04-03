@@ -7,4 +7,4 @@ PyTex用于简化Tex的编写。
 将`\text{d}`定义为`\d`而不是`\dif`，而在其他区域
 将`\dot`定义为`\d`，注意定义命令符时应尽量避免歧义，
 例如若将`\text{d}`定义为`d`，则`ad`也会被错误识别。<br/>
-3. **实验性地支持Markdown转LaTex**。
+3. 支持部分Markdown语法转LaTex。
