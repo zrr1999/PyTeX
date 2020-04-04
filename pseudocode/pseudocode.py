@@ -4,10 +4,10 @@ from pylatex.package import Package
 from pylatex.utils import NoEscape
 
 
-class Function(Environment):
+class PseudoCodeEnv(Environment):
     packages = [Package("algpseudocode")]
 
-    def __init__(self, name, args="", enumeration_symbol=None, *, options=None, **kwargs):
+    def __init__(self, command, name, args=None, enumeration_symbol=None, *, options=None, **kwargs):
         self._enumeration_symbol = enumeration_symbol
 
         if enumeration_symbol is not None:
@@ -18,6 +18,7 @@ class Function(Environment):
                 options = Options()
 
         super().__init__(options=options, **kwargs)
+        self.command = command
         self.name = name
         self.args = args
 
@@ -36,10 +37,14 @@ class Function(Environment):
 
         string = ''
 
-        begin = Command('Function', arguments=(self.name, self.args))
+        if self.args is not None:
+            begin = Command(self.command, arguments=(self.name, self.args))
+        else:
+            begin = Command(self.command, arguments=self.name)
+
         string += begin.dumps() + self.content_separator
         string += content + self.content_separator
-        string += Command('EndFunction').dumps()
+        string += Command('End' + self.command).dumps()
 
         return string
 
@@ -81,6 +86,7 @@ class Algorithm(Environment):
 
         super().__init__(options=options, **kwargs)
 
+
     def caption(self, s):
         self.append(Command('caption', s))
 
@@ -94,11 +100,33 @@ class Algorithm(Environment):
         return alg
 
 
-def algorithm(name, inp=None, out=None):
+def algorithm(name, inp=None, out=None, core=None, label=None):
     al = Algorithm()
     al.caption(name)
     alc = al.algorithmic(inp, out)
-    return alc
+    if core is not None:
+        core.body_append(al)
+        if label is not None:
+            core.pre_append(Command("floatname", arguments=("algorithm", label[0])))
+            core.global_define([r"\algorithmicrequire", r"\algorithmicensure"],
+                               [r"\textbf{输入:}", r"\textbf{输出:}"], True)
+        return alc
+
+
+def al_function(name, args=""):
+    return PseudoCodeEnv("Function", name, args)
+
+
+def al_if(condition):
+    return PseudoCodeEnv("If", condition)
+
+
+def al_while(condition):
+    return PseudoCodeEnv("While", condition)
+
+
+def al_for(condition):
+    return PseudoCodeEnv("For", condition)
 
 
 trans_dict = {"get": "**get**",

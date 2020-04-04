@@ -41,12 +41,17 @@ class Core:
             command = Command(command, content)
             self.doc.preamble.append(command)
 
-    def global_define(self, names, codes):
+    def global_define(self, names, codes, replace=False):
+        if replace:
+            new_command = 'renewcommand'
+        else:
+            new_command = 'newcommand'
+
         if type(names) is list:
             for i, name in enumerate(names):
-                self.doc.preamble.append(Command('newcommand', [NoEscape(name), NoEscape(codes[i])]))
+                self.doc.preamble.append(Command(new_command, [NoEscape(name), NoEscape(codes[i])]))
         else:
-            self.doc.preamble.append(Command('newcommand', [NoEscape(names), NoEscape(codes)]))
+            self.doc.preamble.append(Command(new_command, [NoEscape(names), NoEscape(codes)]))
 
     def local_define(self, names, codes, package=None):
         if package is not None:
@@ -76,7 +81,6 @@ class LocalCore:
                     code = self.codes[i]
                     if type(name) is str:
                         name = re.compile(name+r"\b")
-                    print(name)
                     item = name.sub(code, item)
                     if self.debug:
                         print(item)
