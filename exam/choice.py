@@ -24,7 +24,7 @@ class Tasks(Environment):
         self.append(s)
 
 
-def choice(describe, *items, line_num=4, options=NoEscape(r"counter-format=(tsk[A]),label-width=4ex"), **kwargs):
+def choice(describe, *items, line_num=4, options=None, **kwargs):
     """
 
     :param options:

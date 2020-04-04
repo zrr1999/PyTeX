@@ -8,6 +8,7 @@ from pylatex.utils import NoEscape
 from core import Core
 from exam import Question
 from markdown import md2tex
+from pseudocode import Algorithm, Function, algorithm
 
 packages = [["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"]
 core = Core(packages=packages, debug=True)
@@ -26,8 +27,8 @@ core.body_append(Command('maketitle'))
 
 #  ——————————特色功能展示——————————
 
-with core.local_define([r"\d"], [r"\text{d}"]) as local_core:
-    local_core.append(NoEscape(r"$\dif \d dx$"))
+with core.local_define([r"\\d"], [r"\\text{d}"]) as local_core:  # 用r字符写正则表达式
+    local_core.append(NoEscape(r"$\dif \d \d dx$"))
 
 with core.local_define(
         [re.compile(r"<a>(\S+)</a>"), re.compile(r"<a href=(\S+)>(\S+)</a>")],
@@ -37,10 +38,18 @@ with core.local_define(
 ) as local_core:
     local_core.append(r"<a href=www.baidu.com>百度</a> <a>www.baidu.com</a>")
 
-md2tex(core, "**a** a* *a* ***b*** *b")
+md2tex("**a** a* *a* ***b*** *b", replace=True, core=core)
+print(md2tex("**a** a* *a* ***b*** *b", replace=False))
+
+func = Function("name", "args")
+func.add_state(NoEscape("$6^6$"))
+alc = algorithm("Name", "input", "output")
+alc.append(func)
+core.body_append(alc)
 
 #  ——————————特色功能展示——————————
 
 print("正在生成pdf")
 core.doc.generate_pdf('resources/competition', compiler='XeLatex', clean_tex=False)
+
 

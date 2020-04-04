@@ -75,7 +75,8 @@ class LocalCore:
                 for i, name in enumerate(self.names):
                     code = self.codes[i]
                     if type(name) is str:
-                        name = re.compile(f"{name}\b", re.IGNORECASE)
+                        name = re.compile(name+r"\b")
+                    print(name)
                     item = name.sub(code, item)
                     if self.debug:
                         print(item)
@@ -97,7 +98,7 @@ class LocalCore:
             #         item = NoEscape(item)
             #     self.doc.append(item)
         else:
-            raise NotImplementedError("Command mode is not implemented!")
+            raise NotImplementedError("Other mode is not implemented!")
 
     def __enter__(self):
         return self
