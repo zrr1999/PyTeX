@@ -23,7 +23,7 @@ def md2tex(string, *, replace=True, core=None):
         if core is None:
             raise ValueError("core cannot be None")
         with core.local_define(names, codes) as local_core:
-            local_core.append(string)
+            local_core.append(string, mode="re")
     else:
         for i, name in enumerate(names):
             code = codes[i]
