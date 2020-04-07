@@ -35,9 +35,9 @@ class Question:
         else:
             title = f'本大题共{n}小题，每小题{scores}分，共{n * scores}分'
         title = f"{self.name}: {title}{self.describe}"
-        with self.core.doc.create(Subsection(f'{chinese_nums[self.number]}、' + title, False)):
-            with self.core.doc.create(Enumerate()) as enum:
-                self.core.doc.append(NoEscape(r"\addtocounter{enumi}" + f"{{{self.core.num}}}"))
+        with self.core.create(Subsection(f'{chinese_nums[self.number]}、' + title, False)):
+            with self.core.create(Enumerate()) as enum:
+                self.core.append(NoEscape(r"\addtocounter{enumi}" + f"{{{self.core.num}}}"))
                 for i, problem in enumerate(problems):
                     if type(scores) is list:
                         enum.add_item(NoEscape(f"(本题{scores[i]}分)" + problem))

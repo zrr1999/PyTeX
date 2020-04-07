@@ -1,14 +1,12 @@
 import os
 import re
 
-from pylatex import Command, NewPage, Figure, NewLine
-from pylatex.position import Center
-from pylatex.utils import NoEscape
+from pylatex import Command, Figure, NewLine, NoEscape
 
-from core import Core
-from exam import Question
-from markdown import md2tex
-from pseudocode import Algorithm, algorithm, al_function, al_if
+from pytex.core import Core
+from pytex.markdown import md2tex
+from pytex.pseudocode import algorithm, al_function, al_if
+
 
 packages = [["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"]
 core = Core(packages=packages, debug=True)
@@ -65,6 +63,6 @@ alc.append(con)
 #  ——————————特色功能展示——————————
 
 print("正在生成pdf")
-core.generate_pdf('resources/competition', compiler='XeLatex', clean_tex=False)
+core.generate_pdf('resources/example', compiler='XeLatex', clean_tex=False)
 
 

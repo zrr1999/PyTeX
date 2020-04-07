@@ -4,8 +4,8 @@ from pylatex import Command, NewPage, Figure
 from pylatex.position import Center
 from pylatex.utils import NoEscape
 
-from core import Core
-from exam import Question
+from pytex.core import Core
+from pytex.exam import Question
 
 packages = [["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"]
 core = Core(packages=packages)
@@ -24,8 +24,8 @@ core.body_append(Command('maketitle'))
 core.body_append(NoEscape(r'本试卷分为100分的必答题和10分的选做题，选做题做对加分，'
                           r'做错不扣分，最多累计10分，整卷最高分110分。'))
 
-core.body_append(NoEscape(r"\vspace{18cm}"))
-with core.doc.create(Center()) as centered:
+core.body_append(NoEscape(r"\vspace{15cm}"))
+with core.create(Center()) as centered:
     core.body_append(
         NoEscape(r'\bf{姓名}\ \underline{\hbox to 20mm{}}'),
         NoEscape(r'\bf{学号}\ \underline{\hbox to 20mm{}}'),
@@ -81,7 +81,7 @@ p3.set(r"设二元函数 $f(x,y)$ 在平面上有连续的二阶导数. 对任�
 #  ——————————题目内容——————————
 
 print("正在生成pdf")
-core.doc.generate_pdf('resources/competition', compiler='XeLatex', clean_tex=False)
+core.generate_pdf('resources/exam', compiler='XeLatex', clean_tex=False)
 
 print("已知问题")
 print("换行不能和居中同时使用")
