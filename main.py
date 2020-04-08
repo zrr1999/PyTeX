@@ -3,10 +3,9 @@ import re
 
 from pylatex import Command, Figure, NewLine, NoEscape
 
-from pytex.core import Core
+from pytex import Core, DocTree
 from pytex.markdown import md2tex
 from pytex.pseudocode import algorithm, al_function, al_if
-
 
 packages = [["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"]
 core = Core(packages=packages, debug=True)
@@ -36,8 +35,8 @@ core.body_append(NewLine())
 
 with core.local_define(
         [re.compile(r"<a>(\S+)</a>"), re.compile(r"<a href=(\S+)>(\S+)</a>")],  # 用r字符写正则表达式
-        [lambda m: r"\href{"+m.group(1)+"}{"+m.group(1)+"}",
-         lambda m: r"\href{"+m.group(1)+"}{"+m.group(2)+"}"],
+        [lambda m: r"\href{" + m.group(1) + "}{" + m.group(1) + "}",
+         lambda m: r"\href{" + m.group(1) + "}{" + m.group(2) + "}"],
         package="hyperref"
 ) as local_core:
     local_core.append(r"使用正则表达式定义复杂局部符号：<a href=www.baidu.com>百度</a> <a>www.baidu.com</a>", mode="re")
@@ -60,9 +59,17 @@ con.append(Command("Else"))
 con.add_state(NoEscape("$3^3$"))
 alc.append(con)
 
+doc_tree = DocTree({
+    "title": "Sec1",
+    "content": [{
+        "title": "SubSec1",
+        "content": "内容"
+    }]
+})
+s = doc_tree
+print(s)
+core.body_append(s)
 #  ——————————特色功能展示——————————
 
 print("正在生成pdf")
 core.generate_pdf('resources/example', compiler='XeLatex', clean_tex=False)
-
-
