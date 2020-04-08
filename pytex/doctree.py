@@ -29,6 +29,18 @@ class DocTreeNode(LatexObject):
         return section.dumps()
 
 
-class DocTree(DocTreeNode):
-    def __init__(self, struct):
-        super().__init__(struct, top=0)
+class DocTree(LatexObject):
+    def __init__(self, *structs):
+        super().__init__()
+        self.nodes = []
+        for struct in structs:
+            self.nodes.append(DocTreeNode(struct))
+
+    def __repr__(self):
+        return self.dumps()
+
+    def dumps(self):
+        out = ""
+        for node in self.nodes:
+            out += node.dumps()
+        return out
