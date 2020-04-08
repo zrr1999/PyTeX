@@ -1,6 +1,5 @@
-from pylatex import NoEscape, Package, Command, Document, Section, Subsection, Subsubsection
+from pylatex import Section, Subsection, Subsubsection
 from pylatex.base_classes import LatexObject
-from .core import Core
 
 Section = [Section, Subsection, Subsubsection]
 

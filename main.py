@@ -66,9 +66,7 @@ doc_tree = DocTree({
         "content": "内容"
     }]
 })
-s = doc_tree
-print(s)
-core.body_append(s)
+core.body_append(doc_tree)
 #  ——————————特色功能展示——————————
 
 print("正在生成pdf")
