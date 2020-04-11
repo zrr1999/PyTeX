@@ -86,7 +86,6 @@ class Algorithm(Environment):
 
         super().__init__(options=options, **kwargs)
 
-
     def caption(self, s):
         self.append(Command('caption', s))
 
@@ -105,12 +104,11 @@ def algorithm(name, inp=None, out=None, core=None, label=None):
     al.caption(name)
     alc = al.algorithmic(inp, out)
     if core is not None:
-        core.body_append(al)
         if label is not None:
             core.pre_append(Command("floatname", arguments=("algorithm", label[0])))
             core.global_define([r"\algorithmicrequire", r"\algorithmicensure"],
-                               [r"\textbf{输入:}", r"\textbf{输出:}"], True)
-        return alc
+                               [f"\\textbf{{{label[1]}:}}", f"\\textbf{{{label[2]}:}}"], True)
+    return al, alc
 
 
 def al_function(name, args=""):

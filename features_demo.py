@@ -46,13 +46,14 @@ md2tex("使用markdown表达式转换为LaTex：**a** a* *a* ***b*** *b", replac
 core.body_append(NewLine())
 
 core.body_append("伪代码：")
-alc = algorithm("Name", "input", "output", core=core, label=["算法"])
+al, alc = algorithm("Name", "input", "output", core=core, label=["算法", "输入", "输出"])
 func = al_function("name", "args")
 func.add_state(NoEscape("$6^6$"))
 func.add_state(NoEscape("$2^2$"))
 alc.append(func)
+core.body_append(al)
 
-alc = algorithm("Name", "input", "output", core=core)
+_, alc = algorithm("Name", "input", "output", core=core)
 con = al_if(NoEscape("$a=1$"))
 con.add_state(NoEscape("$4^4$"))
 con.append(Command("Else"))
@@ -71,3 +72,4 @@ core.body_append(doc_tree)
 
 print("正在生成pdf")
 core.generate_pdf('resources/example', compiler='XeLatex', clean_tex=False)
+print("生成完成！\n欢迎使用PyTex！")

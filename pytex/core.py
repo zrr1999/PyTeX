@@ -32,8 +32,7 @@ class Core(Document):
         self.num += add_num
 
     def body_append(self, *items):
-        for item in items:
-            self.append(item)
+        self.extend(items)
 
     def pre_append(self, *items, **commands):
         for item in items:
