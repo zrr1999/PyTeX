@@ -1,10 +1,12 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
 from setuptools import setup, find_packages
 
-with open("README.md", "r") as fh:
+with open("README.md", "rb") as fh:
     long_description = fh.read()
 
 setup(
-    name="pytex",
+    name="bone-pytex",
     version="0.1.1",
     keywords=("LaTex", "MarkDown"),
     description="一个用来简化LaTex编写的python库",
@@ -16,7 +18,7 @@ setup(
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: GNU GENERAL PUBLIC LICENSE",
+        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Operating System :: OS Independent",
     ],
     include_package_data=True,
