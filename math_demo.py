@@ -1,79 +1,73 @@
 import os
 
-from pylatex import Command, NewPage, Figure
+from pylatex import Command, NewPage, LongTable, MultiColumn
 from pylatex.position import Center
 from pylatex.utils import NoEscape
 
-from pytex import Core
-from pytex.exam import Question
+from pytex import MathCore, Abstract, abstract
+from pytex.math import DocTree, Appendices, appendices
 
-core = Core(packages=[["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"])
+core = MathCore(packages=[["geometry", "a4paper, centering, scale=0.8"], "amsmath", "graphicx", "amssymb", "cite"])
 core.define([r"\dif", ], [r"\text{d}", ])
-core.pre_append(title=Command('heiti', '数学建模'))
+core.pre_append(title=Command('ha', '数学建模'), date="")
 
-# fig = Figure(position='h!')
-# fig.add_image(os.path.join(os.path.dirname(__file__), "resources/timg.jpg"),
-#               width=NoEscape(r'0.8\linewidth'))
-
+# core.add_pdf("standard.pdf")
 core.body_append(Command('maketitle'))
-core.body_append(NoEscape(r'本试卷分为100分的必答题和10分的选做题，选做题做对加分，'
-                          r'做错不扣分，最多累计10分，整卷最高分110分。'))
+core.body_append(Abstract("这是一个摘要的示例", ["关键词1", "关键词2"]))
 
-core.body_append(NoEscape(r"\vspace{15cm}"))
-with core.create(Center()) as centered:
-    core.body_append(
-        NoEscape(r'\bf{姓名}\ \underline{\hbox to 20mm{}}'),
-        NoEscape(r'\bf{学号}\ \underline{\hbox to 20mm{}}'),
-        NoEscape(r'\bf{编号}\ \underline{\hbox to 20mm{}}')
-    )
-core.body_append(NewPage())
+data_table = LongTable("l l")
+data_table.add_hline()
+data_table.add_hline()
+data_table.add_row(["符号", "说明"])
+data_table.add_hline()
+data_table.end_table_header()
+data_table.add_hline()
+data_table.end_table_footer()
+data_table.add_hline()
+data_table.add_hline()
+data_table.end_table_last_footer()
+row = ["Content1", "这个描述最好不要超过一行"]
+for i in range(5):
+    data_table.add_row(row)
+# 问题重述
+wtcs = [{
+    "title": "背景资料与条件",
+    "content": "出租车是市民出行的重要交通工具之一，"
+               "“打车难”是人们关注的一个社会热点问题。"
+               "随着“互联网+”时代的到来，有多家公司依托移动互联网建立了打车软件服务平台，"
+               "实现了乘客与出租车司机之间的信息互通，同时推出了多种出租车的补贴方案。"
+}, {
+    "title": "需要解决的问题",
+    "content": "0_0"
+}]
 
-#  ——————————题目内容——————————
 
-p2 = Question(core, name="填空题", describe="", scores=7)
-p3 = Question(core, name="解答题", describe="解答应写出文字说明、证明过程或演算步骤.", line_space=50)
-p4 = Question(core, name="选做题", describe="考生根据心情作答，酌情给分.", line_space=50)
+doctree = DocTree({
+    "title": "问题重述",
+    "content": wtcs
+}, {
+    "title": "问题分析",
+    "content": "这是一个严肃的问题分析"
+},  {
+    "title": "模型假设",
+    "content": "这是一个严肃的模型假设"
+},  {
+    "title": "符号说明",
+    "content": data_table
+},  {
+    "title": "模型的建立与求解",
+    "content": NoEscape(r"小明研究过\cite{name1}小黑根据哈士奇原理\cite{name2}发明的冰淇淋\cite{name3}，不过后来放弃了。")
+},  {
+    "title": "模型的评价",
+    "content": "这是一个严肃的评价"
+}, {
+    "title": "模型的改进与推广",
+    "content": "这是一个优秀的改进"
+})
+core.body_append(doctree)
+core.body_append(NoEscape(r"\bibliography{document.bib}"))
+core.body_append(appendices("../", "test.py", 10))
 
-# with core.local_define([r"\d "], [r"\text{d}"]) as local_core:
-#     local_core.append(NoEscape(r"$\d2 \d \dx<d>x$"), mode="command")
-
-p2.set(r"设$\alpha \in[0.01,0.98]$, 则"
-       r"$\lim_{n \to \infty}\left[(n+1)^{\alpha}-n^{\alpha}\right]=\underline{\hspace*{4em}}$",
-
-       r"极限 $\lim_{n\to\infty}\sin^2\big(\pi\sqrt{n^2+n}\big)=\underline{\hspace*{4em}}$",
-
-       r"设 $w=f(u,v)$ 具有二阶连续偏导数, 且 $u=x-cy$, $v=x+cy$. 其中 $c$ 为非零常数.\\"
-       r"则$w_{xx}-\frac{1}{c^2}w_{yy}=\underline{\hspace*{4em}}$",
-
-       r"设 $f(x)$ 有二阶导数连续, 且 $f(0)=f'(0)=0$, $f''(0)=6$, "
-       r"则 $\lim_{n\to\infty}\frac{f(\sin^2x)}{x^4}=\underline{\hspace*{4em}}$",
-
-       r"不定积分 $\int\frac{e^{-\sin x}\sin2x}{(1-\sin x)^2}\dif x=\underline{\hspace*{4em}}$",
-
-       r"记曲面 $z^2=x^2+y^2$ 和 $z=\sqrt{4-x^2-y^2}$ 围成空间区域为 $V$, "
-       r"则三重积分 $\iint_Vz\dif x\dif y\dif z=\underline{\hspace*{4em}}$"
-       )
-
-p3.set(r"设二元函数 $f(x,y)$ 在平面上有连续的二阶导数. 对任意角度 $\alpha$, "
-       r"定义一元函数\[g_{\alpha}(t)=f(t\cos\alpha,t\sin\alpha).\]"
-       r"若对任何 $\alpha$ 都有 $\frac{\dif g_{\alpha}(0)}{\dif t}=0$ "
-       r"且 $\frac{\dif^2 g_{\alpha}(0)}{\dif t^2}>0$.  求证: $f(0,0)$ 是 $f(x,y)$ 的极小值",
-
-       r"设曲线 $\Gamma$ 为曲线\[x^2+y^2+z^2=1\;,\quad x+z=1\;,"
-       r"\quad x\geqslant0\,,\;y\geqslant0\,,\;z\geqslant0\]上从点 $A(1,0,0)$ "
-       r"到点 $B(0,0,1)$ 的一段.  求曲线积分 $I=\int\limits_{\Gamma}y\dif x+z\dif y+x\dif z$",
-
-       r"设函数 $f(x)>0$ 且在实轴上连续, 若对任意实数 $t$ , "
-       r"有 $\int_{-\infty}^{+\infty}e^{-|t-x|}f(x)\dif x\leqslant1$. "
-       r"\\求证 $\forall\,a,b,a<b$, 有 $\int_{a}^{b}f(x)\dif x\leqslant\frac{b-a+2}{2}$.",
-
-       r"设 $\{a_n\}$ 为一个数列, $p$ 为固定的正整数.  "
-       r"若 $\lim_{n\to\infty}\big(a_{n+p}-a_n\big)=\lambda$, "
-       r"求证: $\lim_{n\to\infty}\frac{a_n}{n}=\frac{\lambda}{p}$",
-       scores=[14, 14, 15, 15]
-       )
-
-#  ——————————题目内容——————————
 
 print("正在生成pdf")
 core.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False)
@@ -81,8 +75,3 @@ core.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False)
 print("已知问题")
 print("换行不能和居中同时使用")
 
-print("待开发功能")
-print("1 随机抽题（计划）")
-print("2 集成图片转latex功能（计划）")
-print("4 支持markdown（计划）")
-print("5 自动试题魔改（开发中）")

@@ -7,11 +7,8 @@ from pylatex.utils import NoEscape
 from pytex import ExamCore
 from pytex.exam import Question
 
-packages = [["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"]
-core = ExamCore(packages=packages)
-
-define = [[r"\dif"], [r"\text{d}"]]
-core.define(*define)
+core = ExamCore(packages=[["geometry", "a4paper,centering,scale=0.8"], "amsmath", "graphicx", "amssymb"])
+core.define([r"\dif"], [r"\text{d}"])
 
 fig = Figure(position='h!')
 fig.add_image(os.path.join(os.path.dirname(__file__), "resources/timg.jpg"),

@@ -12,9 +12,9 @@ class Core(Document):
         :param kwargs: pylatex中Document的参数。
         """
         if kwargs:
-            super(Core, self).__init__(**kwargs)
+            super().__init__(**kwargs)
         else:
-            super(Core, self).__init__(default_filepath='basic', documentclass='ctexart')
+            super().__init__(default_filepath='basic', documentclass='ctexart')
         self.debug = debug
         if packages is not None:
             for package in packages:
@@ -23,19 +23,41 @@ class Core(Document):
                 else:
                     self.packages.append(Package(package))
 
+    def __add__(self, other):
+        self.body_append(other)
+        return self
+
+    def __radd__(self, other):
+        self.pre_append(other)
+        return self
+
     def body_append(self, *items, **commands):
+        """
+        向文档主体中添加内容。
+
+        :param items: 文字序列
+        :param commands: 命令序列
+        :return: None
+        """
         self.extend(items)
         for command, content in commands.items():
             command = Command(command, content)
             self.append(command)
 
     def pre_append(self, *items, **commands):
+        """
+        向文档前言中添加内容。
+
+        :param items: 文字序列
+        :param commands: 命令序列
+        :return: None
+        """
         self.preamble.extend(items)
         for command, content in commands.items():
             command = Command(command, content)
             self.preamble.append(command)
 
-    def define(self, names, codes, replace=False):
+    def define(self, names: list, codes, replace=False):
         if replace:
             new_command = 'renewcommand'
         else:
@@ -47,10 +69,7 @@ class Core(Document):
         else:
             self.preamble.append(Command(new_command, [NoEscape(names), NoEscape(codes)]))
 
-    def __add__(self, other):
-        self.body_append(other)
-        return self
-
-    def __radd__(self, other):
-        self.pre_append(other)
-        return self
+    def add_pdf(self, path: str, page=(1, "")):
+        self.packages.append(Package("pdfpages"))
+        self.pre_append(Command("includepdfset", NoEscape(r"pagecommand={\thispagestyle{fancy}}")))
+        self.body_append(Command("includepdfmerge", NoEscape(f"{path}, {page[0]}-{page[1]}")))
