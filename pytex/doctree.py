@@ -34,5 +34,5 @@ class DocTree(LatexObject):
     def dumps(self):
         out = ""
         for node in self.nodes:
-            out += node.dumps()
+            out += node.dumps()+"\n"
         return out

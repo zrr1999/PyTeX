@@ -1,5 +1,5 @@
 from pylatex import Subsection, Enumerate, NoEscape, NewLine
-from pylatex.base_classes import Environment, Options, Command, LatexObject
+from pylatex.base_classes import Environment, Options, Command, LatexObject, CommandBase
 
 
 class Key(LatexObject):
@@ -9,19 +9,48 @@ class Key(LatexObject):
 
     def append(self, key):
         if isinstance(key, list):
-            self.key += " ".join(key) + " "
+            self.key += r"\quad "+r"\quad ".join(key)
         else:
-            self.key += key + " "
+            self.key += key + r"\quad "
 
     def dumps(self):
-        return self.key
+        return NoEscape(self.key)
+
+
+class Keywords(CommandBase):
+    latex_name = "keywords"
+
+    def __init__(self, arguments=None, options=None, *, extra_arguments=None):
+        if arguments is None:
+            self.args = []
+        else:
+            self.args = arguments
+        self.opts = options
+        self.ex_args = extra_arguments
+        super().__init__(arguments, options, extra_arguments=extra_arguments)
+
+    def set(self):
+        super().__init__(self.args, self.opts, extra_arguments=self.ex_args)
+
+    def append(self, keys):
+        if isinstance(keys, list):
+            for key in keys:
+                self.args.append(r"{}".format(key))
+                self.args.append(Command("quad"))
+        else:
+            self.args.append(r"{}".format(keys))
+            self.args.append(Command("quad"))
+        self.set()
 
 
 class Abstract(Environment):
-    def __init__(self, content=None, key=None,  **kwargs):
+    def __init__(self, content=None, key=None, standard="XD", **kwargs):
         super().__init__(**kwargs)
-        self.append(NoEscape(r"\neirong"))
-        self.key = Key("关键词")
+        if standard == "GJS":
+            self.key = Keywords()
+        else:
+            self.append(NoEscape(r"\neirong"))
+            self.key = Key("关键词")
         if content:
             self.add_content(content)
         if key:

@@ -5,9 +5,9 @@ from pylatex.position import Center
 from pylatex.utils import NoEscape
 
 from pytex import MathCore, Abstract, abstract
-from pytex.math import DocTree, Appendices, appendices
+from pytex.math import DocTree, Appendices, appendices, table
 
-core = MathCore(packages=[["geometry", "a4paper, centering, scale=0.8"], "amsmath", "graphicx", "amssymb", "cite"])
+core = MathCore(packages=["amsmath", "graphicx", "amssymb", "cite"])
 core.define([r"\dif", ], [r"\text{d}", ])
 core.pre_append(title=Command('ha', '数学建模'), date="")
 
@@ -16,17 +16,7 @@ core.body_append(Command('maketitle'))
 core.body_append(Abstract("这是一个摘要的示例", ["关键词1", "关键词2"]))
 core.body_append(NewPage())
 
-data_table = LongTable("l l")
-data_table.add_hline()
-data_table.add_hline()
-data_table.add_row(["符号", "说明"])
-data_table.add_hline()
-data_table.end_table_header()
-data_table.add_hline()
-data_table.end_table_footer()
-data_table.add_hline()
-data_table.add_hline()
-data_table.end_table_last_footer()
+data_table = table()
 row = ["Content1", "这个描述最好不要超过一行"]
 for i in range(5):
     data_table.add_row(row)
@@ -67,7 +57,7 @@ doctree = DocTree({
 })
 core.body_append(doctree)
 core.body_append(NoEscape(r"\bibliography{document.bib}"))
-core.body_append(appendices("../", "test.py", 10))
+# core.body_append(appendices("../", "main.py", 10))
 
 
 print("正在生成pdf")
