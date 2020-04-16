@@ -14,6 +14,7 @@ core.pre_append(title=Command('ha', '数学建模'), date="")
 # core.add_pdf("standard.pdf")
 core.body_append(Command('maketitle'))
 core.body_append(Abstract("这是一个摘要的示例", ["关键词1", "关键词2"]))
+core.body_append(NewPage())
 
 data_table = LongTable("l l")
 data_table.add_hline()
