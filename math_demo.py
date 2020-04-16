@@ -4,17 +4,18 @@ from pylatex import Command, NewPage, LongTable, MultiColumn
 from pylatex.position import Center
 from pylatex.utils import NoEscape
 
-from pytex import MathCore, Abstract, abstract
+from pytex import MathDocument, Abstract, abstract
 from pytex.math import DocTree, Appendices, appendices, table
 
-core = MathCore(packages=["amsmath", "graphicx", "amssymb", "cite"])
+core = MathDocument(packages=["amsmath", "graphicx", "amssymb", "cite"])
 core.define([r"\dif", ], [r"\text{d}", ])
 core.pre_append(title=Command('ha', '数学建模'), date="")
 
-# core.add_pdf("standard.pdf")
-core.body_append(Command('maketitle'))
-core.body_append(Abstract("这是一个摘要的示例", ["关键词1", "关键词2"]))
-core.body_append(NewPage())
+# core.add_pdf("standard.pdf")  # 你可以使用你自己的标准页（GJS标准默认参数会自带标准页）
+core.add_title()
+core.add_abstract("这是一个摘要的示例", ["关键词1", "关键词2"])
+core.add_toc()
+core.add_page()
 
 data_table = table()
 row = ["Content1", "这个描述最好不要超过一行"]
@@ -59,10 +60,5 @@ core.body_append(doctree)
 core.body_append(NoEscape(r"\bibliography{document.bib}"))
 # core.body_append(appendices("../", "main.py", 10))
 
-
 print("正在生成pdf")
 core.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False)
-
-print("已知问题")
-print("换行不能和居中同时使用")
-

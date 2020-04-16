@@ -6,8 +6,12 @@ font = ["hb", "hc", "hc"]
 
 
 class DocTreeNode(Section):
-    def __init__(self, struct, top=0):
-        super().__init__(NoEscape(Command(font[top], struct["title"]).dumps()))
+    def __init__(self, struct, top=0, auto_font=True):
+        if auto_font:
+            super().__init__(NoEscape(Command(font[top], struct["title"]).dumps()))
+        else:
+            super().__init__(struct["title"])
+
         self._latex_name = marker_prefix[top]
         if type(struct["content"]) is list:
             for i, content in enumerate(struct["content"]):
@@ -21,7 +25,7 @@ class DocTreeNode(Section):
 
 
 class DocTree(LatexObject):
-    def __init__(self, *structs, packages=None, top=0):
+    def __init__(self, *structs, packages=None, top=0, font_mode="Auto"):
         super().__init__()
         self.data = []
         self.packages = []

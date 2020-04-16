@@ -1,4 +1,4 @@
-from pylatex import NoEscape, Package, Command, Document
+from pylatex import NoEscape, Package, Command, Document, NewPage
 import re
 
 
@@ -68,8 +68,3 @@ class Core(Document):
                 self.preamble.append(Command(new_command, [NoEscape(name), NoEscape(codes[i])]))
         else:
             self.preamble.append(Command(new_command, [NoEscape(names), NoEscape(codes)]))
-
-    def add_pdf(self, path: str, page=(1, "")):
-        self.packages.append(Package("pdfpages"))
-        self.pre_append(Command("includepdfset", NoEscape(r"pagecommand={\thispagestyle{fancy}}")))
-        self.body_append(Command("includepdfmerge", NoEscape(f"{path}, {page[0]}-{page[1]}")))
