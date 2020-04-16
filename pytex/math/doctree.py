@@ -6,7 +6,7 @@ font = ["hb", "hc", "hc"]
 
 
 class DocTreeNode(Section):
-    def __init__(self, struct, top=0, auto_font=True):
+    def __init__(self, struct, top=0, auto_font=False):
         if auto_font:
             super().__init__(NoEscape(Command(font[top], struct["title"]).dumps()))
         else:
@@ -25,12 +25,12 @@ class DocTreeNode(Section):
 
 
 class DocTree(LatexObject):
-    def __init__(self, *structs, packages=None, top=0, font_mode="Auto"):
+    def __init__(self, *structs, packages=None, top=0, auto_font=False):
         super().__init__()
         self.data = []
         self.packages = []
         for struct in structs:
-            self.data.append(DocTreeNode(struct, top))
+            self.data.append(DocTreeNode(struct, top, auto_font))
         if packages is not None:
             for package in packages:
                 self.packages.append(package)

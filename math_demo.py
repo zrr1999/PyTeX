@@ -4,18 +4,11 @@ from pylatex import Command, NewPage, LongTable, MultiColumn
 from pylatex.position import Center
 from pylatex.utils import NoEscape
 
-from pytex import MathDocument, Abstract, abstract
+from pytex import MathDocument
 from pytex.math import DocTree, Appendices, appendices, table
 
-core = MathDocument(packages=["amsmath", "graphicx", "amssymb", "cite"])
-core.define([r"\dif", ], [r"\text{d}", ])
-core.pre_append(title=Command('ha', '数学建模'), date="")
-
-# core.add_pdf("standard.pdf")  # 你可以使用你自己的标准页（GJS标准默认参数会自带标准页）
-core.add_title()
-core.add_abstract("这是一个摘要的示例", ["关键词1", "关键词2"])
-core.add_toc()
-core.add_page()
+doc = MathDocument('数学建模', packages=["amsmath", "graphicx", "amssymb", "cite"], standard="GJS", preface=False)
+# doc.add_pdf("standard.pdf")  # 你可以使用你自己的标准页（GJS标准默认参数会自带标准页）
 
 data_table = table()
 row = ["Content1", "这个描述最好不要超过一行"]
@@ -32,33 +25,22 @@ wtcs = [{
     "title": "需要解决的问题",
     "content": "0_0"
 }]
+# 模型的建立与求解
+mxjl = NoEscape(r"小明研究过\cite{name1}小黑根据哈士奇原理\cite{name2}发明的冰淇淋\cite{name3}，不过后来放弃了。")
 
+doc.add_title()
+doc.add_abstract("这是一个摘要的示例", ["关键词1", "关键词2"])
+doc.add_toc()
+doc.add_section(title="问题重述", content=wtcs)
+doc.add_section(title="问题分析", content=wtcs)
+doc.add_section(title="模型假设", content=wtcs)
+doc.add_section(title="符号说明", content=data_table)
+doc.add_section(title="模型的建立与求解", content=mxjl)
+doc.add_section(title="模型的评价", content=data_table)
+doc.add_section(title="模型的改进与推广", content=data_table)
 
-doctree = DocTree({
-    "title": "问题重述",
-    "content": wtcs
-}, {
-    "title": "问题分析",
-    "content": "这是一个严肃的问题分析"
-},  {
-    "title": "模型假设",
-    "content": "这是一个严肃的模型假设"
-},  {
-    "title": "符号说明",
-    "content": data_table
-},  {
-    "title": "模型的建立与求解",
-    "content": NoEscape(r"小明研究过\cite{name1}小黑根据哈士奇原理\cite{name2}发明的冰淇淋\cite{name3}，不过后来放弃了。")
-},  {
-    "title": "模型的评价",
-    "content": "这是一个严肃的评价"
-}, {
-    "title": "模型的改进与推广",
-    "content": "这是一个优秀的改进"
-})
-core.body_append(doctree)
-core.body_append(NoEscape(r"\bibliography{document.bib}"))
-# core.body_append(appendices("../", "main.py", 10))
+doc.body_append(NoEscape(r"\bibliography{document.bib}"))
+# doc.body_append(appendices("../", "main.py", 10))
 
 print("正在生成pdf")
-core.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False)
+doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=False)
