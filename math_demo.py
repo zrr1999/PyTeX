@@ -43,4 +43,4 @@ doc.body_append(NoEscape(r"\bibliography{document.bib}"))
 # doc.body_append(appendices("../", "main.py", 10))
 
 print("正在生成pdf")
-doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=False)
+doc.generate_pdf('resources/base', compiler='XeLatex', clean_tex=False, clean=False)
