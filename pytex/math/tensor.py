@@ -1,4 +1,4 @@
-from variable import Variable
+from pytex.math.variable import Variable
 
 
 class Tensor(object):

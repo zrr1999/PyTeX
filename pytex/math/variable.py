@@ -1,9 +1,5 @@
 class Variable(object):
     """一个存储变量和运算变量的类
-
-    属性：
-        name：传递进来的值，字符串或数字
-
     """
 
     def __init__(self, name):
@@ -11,8 +7,7 @@ class Variable(object):
 
         :param name: 变量的显示名字，支持传入数字
         """
-        self.name = str(name)
-        pass
+        self.name = name
 
     def __repr__(self):
         """
