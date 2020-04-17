@@ -19,6 +19,14 @@ class Document(Core):
         """
         self.body_append(Command('maketitle'))
 
+    def add_toc(self):
+        """
+        给文档添加目录
+
+        :return: None
+        """
+        self.body_append(Command("tableofcontents"))
+
     def add_pdf(self, path: str, page=(1, "")):
         self.packages.append(Package("pdfpages"))
         self.pre_append(Command("includepdfset", NoEscape(r"pagecommand={\thispagestyle{fancy}}")))
@@ -77,14 +85,6 @@ class MathDocument(Document):
         :return: None
         """
         self.body_append(Abstract(content, key, self.standard))
-
-    def add_toc(self):
-        """
-        给文档添加目录
-
-        :return: None
-        """
-        self.body_append(Command("tableofcontents"))
 
     def add_section(self, title, content):
         doc_tree = DocTree({"title": title, "content": content}, auto_font=(self.standard == "XD"))
