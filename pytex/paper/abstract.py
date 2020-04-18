@@ -46,6 +46,7 @@ class Keywords(CommandBase):
 class Abstract(Environment):
     def __init__(self, content=None, key=None, standard="XD", **kwargs):
         super().__init__(**kwargs)
+        self.standard = standard
         if standard == "GJS":
             self.key = Keywords()
         else:
@@ -58,10 +59,11 @@ class Abstract(Environment):
 
     def add_content(self, s, space=None):
         self.append(s)
-        if space:
-            self.append(NoEscape(r"\vspace{"+space+"cm}"))
-        else:
-            self.append(NewLine())
+        if self.standard == "XD":
+            if space:
+                self.append(NoEscape(r"\vspace{" + space + "cm}"))
+            else:
+                self.append(NewLine())
         self.append(self.key)
 
     def add_key(self, key):

@@ -1,2 +1,1 @@
-from pytex.paper.doctree import DocTree
-
+from .table import table, long_table

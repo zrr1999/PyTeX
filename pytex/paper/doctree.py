@@ -1,5 +1,7 @@
 from pylatex import Section, Subsection, Subsubsection, Package, Command, NoEscape
 from pylatex.base_classes import LatexObject
+import sympy as sp
+from .section import Section
 
 marker_prefix = ["section", "subsection", "subsubsection"]
 font = ["hb", "hc", "hc"]

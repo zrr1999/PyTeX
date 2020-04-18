@@ -1,5 +1,8 @@
 from .core import Core
-from .math import Abstract, DocTree
+from .paper import Abstract, DocTree, DocTreeNode
+from .base import table
+from .utils import sym2tex, md2tex
+import sympy as sp
 from pylatex import NoEscape, Package, Command, NewPage, PageStyle, Foot
 
 
@@ -18,6 +21,16 @@ class Document(Core):
         :return: None
         """
         self.body_append(Command('maketitle'))
+
+    def add_abstract(self, content=None, key=None):
+        """
+        给文档添加摘要
+
+        :param content: 摘要内容
+        :param key: 摘要关键字
+        :return: None
+        """
+        self.body_append(Abstract(content, key))
 
     def add_toc(self):
         """
@@ -43,6 +56,14 @@ class Document(Core):
     def add_section(self, title, content):
         doc_tree = DocTree({"title": title, "content": content})
         self.body_append(doc_tree)
+
+    def add_bib(self, path):
+        """
+
+        :param path: 参考文献位置
+        :return:
+        """
+        self.body_append(NoEscape(f"\\bibliography{{{path}}}"))
 
 
 class MathDocument(Document):
@@ -74,6 +95,7 @@ class MathDocument(Document):
                 r"\fontsize{12pt}{\baselineskip}\songti",
             ])
         self.pre_append(NoEscape(r"\bibliographystyle{plain}"))
+        self.var_table = table()
 
     def add_abstract(self, content=None, key=None):
         """
@@ -81,14 +103,25 @@ class MathDocument(Document):
 
         :param content: 摘要内容
         :param key: 摘要关键字
-        :param standard: 摘要标准，默认为西电标准
         :return: None
         """
         self.body_append(Abstract(content, key, self.standard))
 
     def add_section(self, title, content):
-        doc_tree = DocTree({"title": title, "content": content}, auto_font=(self.standard == "XD"))
-        self.body_append(doc_tree, "\n")
+        doc_tree = DocTreeNode({"title": title, "content": content}, auto_font=(self.standard == "XD"))
+        self.body_append(NoEscape("\n"), doc_tree)
+
+    def add_var(self, name, describe=""):
+        var = sp.Symbol(name)
+        self.var_table.add_row(NoEscape(f"${name}$"), describe)
+        return var
+
+    def add_math(self, math, inline=True):
+        self.body_append(sym2tex(math, inline))
+        return math
+
+    def add_md(self, path):
+        self.body_append(md2tex(open(path, 'r', encoding='UTF-8')))
 
 
 class ExamDocument(Document):

@@ -1,4 +1,4 @@
-from variable import Variable
+from .variable import Variable
 
 
 x = Variable([[2, 1]], require_grad=True)
