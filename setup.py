@@ -23,7 +23,7 @@ setup(
     ],
     include_package_data=True,
     platforms="any",
-    install_requires=['pylatex', 'sympy'],
+    install_requires=['sympy'],
     scripts=[],
     # entry_points={
     #     'console_scripts': [

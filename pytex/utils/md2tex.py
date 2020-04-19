@@ -22,10 +22,12 @@ class MarkDown(LatexObject):
         return md2tex(self.file)
 
 
-def md2tex(file):
+def md2tex(file=None, path=None, mode='r'):
     """"""
-
-    string = file.read()
+    if file:
+        string = file.read()
+    else:
+        string = open(path, mode, encoding='UTF-8').read()
     string = transform_formula(string)
     string = transform_struct(string)
     string = transform_itemize(string)
@@ -39,7 +41,7 @@ def transform_formula(string):
     :return: 转换后的文本
     """
     names = [
-        re.compile(r"\*\*(\S+)\*\*", re.IGNORECASE),
+        re.compile(r"\*\*(\S+)\*\*"),
         re.compile(r"\*(\S+)\*"),
         re.compile(r"\$\$(\S+)\$\$"),
     ]
@@ -83,12 +85,12 @@ def transform_itemize(string):
     :return: 转换后的文本
     """
     names = [
-        re.compile(r"[0-9]\. (\S+)\n"),
-        re.compile(r"- (\S+)\n"),
-        re.compile(r"\[(\S+)]: (\S+)\n"),
+        re.compile(r"[0-9]\. "),
+        re.compile(r"- "),
+        re.compile(r"\[(\S+)]: (\S+)"),
     ]
     for name in names[:2]:
-        string = name.sub(lambda m: r"\item "+m.group(1)+"\n", string)
+        string = name.sub(lambda m: r"\item ", string)
     string = names[2].sub(lambda m: f"\\{m.group(1)}{{{m.group(2)}}}\n", string)
     return string
 

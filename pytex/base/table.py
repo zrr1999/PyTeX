@@ -18,7 +18,7 @@ def long_table(num=2, title=("符号", "说明")):
 
 
 def table(num=2, title=("符号", "说明")):
-    data_table = LongTable("l "*num)
+    data_table = LongTable("c "*num)
     data_table.add_hline()
     data_table.add_hline()
     data_table.add_row(title)

@@ -68,6 +68,14 @@ class Document(Core):
 
 class MathDocument(Document):
     def __init__(self, title, packages=None, debug=None, standard="XD", preface=True):
+        """
+
+        :param title: 论文标题
+        :param packages: 论文需要用到的包（使用Python端创建的对象需要的包会自动添加）
+        :param debug: 暂时无用
+        :param standard: 论文格式，分为XD和GJS
+        :param preface: 是否需要打印标准页（承诺书和评分），XD暂未添加
+        """
         self.standard = standard
         if standard == "GJS":
             if preface:
@@ -107,9 +115,12 @@ class MathDocument(Document):
         """
         self.body_append(Abstract(content, key, self.standard))
 
-    def add_section(self, title, content):
-        doc_tree = DocTreeNode({"title": title, "content": content}, auto_font=(self.standard == "XD"))
-        self.body_append(NoEscape("\n"), doc_tree)
+    def add_section(self, title=None, content=None, path=None):
+        if path:
+            self.add_md(path)  # 问题重述
+        else:
+            doc_tree = DocTreeNode({"title": title, "content": content}, auto_font=(self.standard == "XD"))
+            self.body_append(NoEscape("\n"), doc_tree)
 
     def add_var(self, name, describe=""):
         var = sp.Symbol(name)
