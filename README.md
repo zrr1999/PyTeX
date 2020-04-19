@@ -22,7 +22,7 @@ PyTex用于简化Tex的编写，熟练使用本库需要对Python语法基本了
 
 ## 安装[![Downloads](https://pepy.tech/badge/bone-pytex)](https://pepy.tech/project/bone-pytex)
 
-这个项目使用 [Python](http://nodejs.org) 开发，请确保你本地安装了它。建议使用pip安装。
+这个项目使用 [Python](https://www.python.org/downloads/) 开发，请确保你本地安装了它。建议使用pip安装。
 
 ```sh
 $ pip install bone-pytex
