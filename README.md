@@ -98,6 +98,8 @@ formula, name = st.sym2tex((x**2+7)*5)
 4. 图制作。
 
 ## 更新日志
+- (2020.04. ) v0.1.4 发布
+    - 完善了markdown到latex的转换功能。
 - (2020.04.17) v0.1.3 发布
     - 大幅度优化了数模模块。
     - 优化了结构。
@@ -112,7 +114,8 @@ formula, name = st.sym2tex((x**2+7)*5)
 
 ## 维护者
 
-[@詹荣瑞](https://github.com/tczrr1999)。
+[@詹荣瑞](https://github.com/tczrr1999)、
+[@WilsonLuo19](https://github.com/WilsonLuo19)。
 
 ## 如何贡献
 
