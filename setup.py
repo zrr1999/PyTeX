@@ -7,7 +7,7 @@ with open("README.md", "rb") as fh:
 
 setup(
     name="bone-pytex",
-    version="0.1.2",
+    version="0.1.3",
     keywords=("LaTex", "MarkDown"),
     description="一个用来简化LaTex编写的python库",
     long_description="一个用来简化LaTex编写的python库",

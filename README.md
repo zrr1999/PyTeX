@@ -7,10 +7,6 @@
 PyTex用于简化Tex的编写，熟练使用本库需要对Python语法基本了解。
 本库适合对LaTex基本语法已经掌握的同学和不会使用LaTex却需要使用LaTex的同学。
 
-## 内容列表
-
-[TOC]
-
 ## 背景
 
 某天突发奇想要做个LaTex的辅助编写工具，于是就开始了。
@@ -26,7 +22,7 @@ PyTex用于简化Tex的编写，熟练使用本库需要对Python语法基本了
 
 ## 安装[![Downloads](https://pepy.tech/badge/bone-pytex)](https://pepy.tech/project/bone-pytex)
 
-这个项目使用 [node](http://nodejs.org) 和 [npm](https://npmjs.com)。请确保你本地安装了它们。
+这个项目使用 [Python](http://nodejs.org) 开发，请确保你本地安装了它。建议使用pip安装。
 
 ```sh
 $ pip install bone-pytex
@@ -120,7 +116,7 @@ formula, name = st.sym2tex((x**2+7)*5)
 
 ## 如何贡献
 
-非常欢迎你的加入！[提一个 Issue](https://github.com/RichardLitt/standard-readme/issues/new) 或者提交一个 Pull Request。
+非常欢迎你的加入！[提一个 Issue](https://github.com/tczrr1999/pytex/issues/new) 或者提交一个 Pull Request。
 
 ### 贡献者
 
