@@ -115,6 +115,7 @@ formula, name = st.sym2tex((x**2+7)*5)
 ## 维护者
 
 [@詹荣瑞](https://github.com/tczrr1999)、
+[@Lynn-Speng](https://github.com/Lynn-Speng)、
 [@WilsonLuo19](https://github.com/WilsonLuo19)。
 
 ## 如何贡献
@@ -128,4 +129,5 @@ formula, name = st.sym2tex((x**2+7)*5)
 
 ## 使用许可
 
+禁止将本辅助库及使用本辅助库制作的文档上传到百度网盘。
 [GNU](LICENSE) © Rongrui Zhan
