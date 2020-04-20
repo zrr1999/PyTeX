@@ -1,13 +1,26 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from setuptools import setup, find_packages
+import sys
 
 with open("README.md", "rb") as fh:
     long_description = fh.read()
 
+extras = {
+    'docs': ['sphinx'],
+    'matrices': ['numpy'],
+    'matplotlib': ['matplotlib'],
+    'quantities': ['quantities', 'numpy'],
+    'testing': ['flake8<3.0.0', 'pep8-naming==0.8.2',
+                'flake8_docstrings==1.3.0', 'pycodestyle==2.0.0',
+                'pydocstyle==3.0.0', 'pyflakes==1.2.3', 'nose', 'flake8-putty',
+                'coverage'],
+    'convert_to_py2': ['3to2', 'future>=0.15.2'],
+}
+
 setup(
     name="bone-pytex",
-    version="0.1.3",
+    version="0.1.3.b",
     keywords=("LaTex", "MarkDown"),
     description="一个用来简化LaTex编写的python库",
     long_description="一个用来简化LaTex编写的python库",
@@ -23,7 +36,8 @@ setup(
     ],
     include_package_data=True,
     platforms="any",
-    install_requires=['sympy'],
+    install_requires=['sympy', 'ordered-set'],
+    extras_require=extras,
     scripts=[],
     # entry_points={
     #     'console_scripts': [

@@ -134,6 +134,19 @@ class MathDocument(Document):
     def add_md(self, path):
         self.body_append(md2tex(open(path, 'r', encoding='UTF-8')))
 
+    def set_information(self, problem_num="A", team_num="0001", school_name="最强大学",
+                        member_names=("a", "b", "c"), supervisor="teacher", date=(2020, 4, 20)):
+        self.pre_append(Command("tihao", problem_num))
+        self.pre_append(Command("baominghao", team_num))
+        self.pre_append(Command("schoolname", school_name))
+        self.pre_append(Command("membera", member_names[0]))
+        self.pre_append(Command("memberb", member_names[1]))
+        self.pre_append(Command("memberc", member_names[2]))
+        self.pre_append(Command("supervisor", supervisor))
+        self.pre_append(Command("yearinput", date[0]))
+        self.pre_append(Command("monthinput", date[1]))
+        self.pre_append(Command("dayinput", date[2]))
+
 
 class ExamDocument(Document):
     def __init__(self, packages=None, debug=None, **kwargs):

@@ -5,6 +5,7 @@ from pytex.base import table
 from pytex.utils import SymbolTransformer, md2tex
 doc = MathDocument('数学建模', packages=["amsmath", "graphicx", "amssymb", "cite"],
                    standard="GJS", preface=False)
+doc.set_information()
 # doc.add_pdf("standard.pdf")  # 你可以使用你自己的标准页（GJS标准默认参数会自带标准页）
 
 x = doc.add_var("x", NoEscape("这是一个优秀的$x$"))
@@ -14,7 +15,7 @@ wtfx = formula[0]
 
 key = ["出租车资源配置", "供求匹配模型", "缓解程度判断模型", "分区域动态实时补贴方案"]
 doc.add_title()
-doc.add_abstract(md2tex("md/abstract.md"), key)
+doc.add_abstract(md2tex(path="md/abstract.md"), key)
 doc.add_toc()
 doc.add_section(path="md/wtcs.md")  # 问题重述
 doc.add_section(path="md/wtfx.md")  # 问题分析

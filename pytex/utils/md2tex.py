@@ -23,7 +23,13 @@ class MarkDown(LatexObject):
 
 
 def md2tex(file=None, path=None, mode='r'):
-    """"""
+    """
+
+    :param file: 传入的文件
+    :param path:
+    :param mode:
+    :return:
+    """
     if file:
         string = file.read()
     else:

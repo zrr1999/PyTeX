@@ -38,19 +38,27 @@ doc = MathDocument('数学建模', packages=["amsmath", "graphicx", "amssymb", "
                    standard="GJS", preface=False)
 ```
 
+如果你使用了默认的标准页，可以通过命令添加队伍信息
+
+```python
+doc.set_information(problem_num="A", team_num="0001", school_name="最强大学",
+                    member_names=("a", "b", "c"), supervisor="teacher", date=(2020, 4, 20))
+```
+
 你可以将md转换为latex
 
 ```python
 from pytex.utils import md2tex
-latex_code = md2tex("md/abstract.md")
+latex_code1 = md2tex(path="md/abstract.md")
+latex_code2 = md2tex(file=open("md/abstract.md", 'r', encoding='UTF-8'))
 ```
 
 你可以在文档中添加标题、摘要、目录。
 
 ```python
 doc.add_title()
-doc.add_abstract(latex_code, 
-                 ["出租车资源配置", "供求匹配模型", "缓解程度判断模型", "分区域动态实时补贴方案"])
+keys = ["出租车资源配置", "供求匹配模型", "缓解程度判断模型", "分区域动态实时补贴方案"]
+doc.add_abstract(latex_code, keys)
 doc.add_toc()
 ```
 
@@ -80,15 +88,16 @@ formula, name = st.sym2tex((x**2+7)*5)
 可以参考demo结尾的几个文件。
 
 ## 特色功能
-1. 提供了试卷编写模块，详情见pytex/exam/README.md。<br/>
-2. 支持定义局部操作（由于功能定位不清楚暂时废弃）。例如:
-> 在经常用到导数和积分的局部区域
-> 将`\text{d}`定义为`\d`，而在其他区域
-> 将`\dot`定义为`\d`，注意定义命令符时应尽量避免歧义，
-> 例如若将`\text{d}`定义为`d`，则`ad`也会被错误识别。
-3. 支持部分Markdown语法转LaTex。
-4. 伪代码编写。
-5. 针对数模进行了大幅度优化，提供了高教社标准和西电标准（非官方）。
+1. 提供了试卷编写模块，详情见pytex/exam/README.md。
+2. 支持引用特定规范的Markdown文件。
+3. 支持定义局部操作（由于功能定位不清楚暂时废弃）。例如:
+   在经常用到导数和积分的局部区域将`\text{d}`定义为`\d`，
+   而在其他区域将`\dot`定义为`\d`，
+   注意定义命令符时应尽量避免歧义，
+   例如若将`\text{d}`定义为`d`，则`ad`也会被错误识别。
+4. 支持部分Markdown语法转LaTex。
+5. 伪代码编写。
+6. 针对数模进行了大幅度优化，提供了高教社标准和西电标准（非官方）。
 
 ## 计划实现功能
 1. 神经网络结构可视化，输入处理形状变换可视化。
