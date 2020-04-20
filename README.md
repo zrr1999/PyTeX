@@ -78,9 +78,16 @@ doc.add_section(title="符号说明", content="大家好啊")
 
 ```python
 from pytex.utils import SymbolTransformer
+from pylatex import NoEscape
 x = doc.add_var("x", NoEscape("这是一个优秀的$x$"))
 st = SymbolTransformer()
 formula, name = st.sym2tex((x**2+7)*5)
+```
+
+最后，你可以生成tex文档，或者pdf文档
+
+```python
+doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=False)
 ```
 
 ## 示例

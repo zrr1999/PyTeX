@@ -1,4 +1,4 @@
-from pylatex.utils import NoEscape
+from pylatex import NoEscape
 
 from pytex import MathDocument
 from pytex.base import table
