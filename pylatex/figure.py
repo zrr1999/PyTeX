@@ -8,7 +8,7 @@ This module implements the class that deals with graphics.
 
 import posixpath
 
-from .utils import fix_filename, make_temp_dir, NoEscape, escape_latex
+from .utils import fix_filename, make_temp_dir, NoEscapeStr, escape_latex
 from .base_classes import Float, UnsafeCommand
 from .package import Package
 import uuid
@@ -17,8 +17,8 @@ import uuid
 class Figure(Float):
     """A class that represents a Figure environment."""
 
-    def add_image(self, filename, *, width=NoEscape(r'0.8\textwidth'),
-                  placement=NoEscape(r'\centering')):
+    def add_image(self, filename, *, width=NoEscapeStr(r'0.8\textwidth'),
+                  placement=NoEscapeStr(r'\centering')):
         """Add an image to the figure.
 
         Args
@@ -104,7 +104,7 @@ class SubFigure(Figure):
         'width': 'arguments',
     }
 
-    def __init__(self, width=NoEscape(r'0.45\linewidth'), **kwargs):
+    def __init__(self, width=NoEscapeStr(r'0.45\linewidth'), **kwargs):
         """
         Args
         ----
@@ -116,7 +116,7 @@ class SubFigure(Figure):
 
         super().__init__(arguments=width, **kwargs)
 
-    def add_image(self, filename, *, width=NoEscape(r'\linewidth'),
+    def add_image(self, filename, *, width=NoEscapeStr(r'\linewidth'),
                   placement=None):
         """Add an image to the subfigure.
 
@@ -146,7 +146,7 @@ class StandAloneGraphic(UnsafeCommand):
     }
 
     def __init__(self, filename,
-                 image_options=NoEscape(r'width=0.8\textwidth'),
+                 image_options=NoEscapeStr(r'width=0.8\textwidth'),
                  extra_arguments=None):
         r"""
         Args
@@ -157,7 +157,7 @@ class StandAloneGraphic(UnsafeCommand):
             Specifies the options for the image (ie. height, width)
         """
 
-        arguments = [NoEscape(filename)]
+        arguments = [NoEscapeStr(filename)]
 
         super().__init__(command=self._latex_name, arguments=arguments,
                          options=image_options,

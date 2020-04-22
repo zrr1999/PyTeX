@@ -3,7 +3,8 @@ from .paper import Abstract, DocTree, DocTreeNode
 from .base import table
 from .utils import sym2tex, md2tex
 import sympy as sp
-from pylatex import NoEscape, Package, Command, NewPage, PageStyle, Foot
+from pylatex import NoEscapeStr, Package, Command, NewPage, PageStyle, Foot
+from .utils.md2tex import MarkDown
 
 
 class Document(Core):
@@ -42,8 +43,8 @@ class Document(Core):
 
     def add_pdf(self, path: str, page=(1, "")):
         self.packages.append(Package("pdfpages"))
-        self.pre_append(Command("includepdfset", NoEscape(r"pagecommand={\thispagestyle{fancy}}")))
-        self.body_append(Command("includepdfmerge", NoEscape(f"{path}, {page[0]}-{page[1]}")))
+        self.pre_append(Command("includepdfset", NoEscapeStr(r"pagecommand={\thispagestyle{fancy}}")))
+        self.body_append(Command("includepdfmerge", NoEscapeStr(f"{path}, {page[0]}-{page[1]}")))
 
     def add_page(self):
         """
@@ -63,7 +64,7 @@ class Document(Core):
         :param path: 参考文献位置
         :return:
         """
-        self.body_append(NoEscape(f"\\bibliography{{{path}}}"))
+        self.body_append(NoEscapeStr(f"\\bibliography{{{path}}}"))
 
 
 class MathDocument(Document):
@@ -91,18 +92,18 @@ class MathDocument(Document):
             super().__init__(Command('ha', title), packages, debug)
             header = PageStyle("header")
             with header.create(Foot("C")):
-                header.append(NoEscape(r"\thepage"))
+                header.append(NoEscapeStr(r"\thepage"))
             self.pre_append(header)
             self.change_document_style("header")
             self.define([r"\abstractname"], [r"\hb 摘要"], True)
-            self.pre_append(NoEscape(r"\setCJKfamilyfont{zhsong}[AutoFakeBold = {2.17}]{SimSun}"))
+            self.pre_append(NoEscapeStr(r"\setCJKfamilyfont{zhsong}[AutoFakeBold = {2.17}]{SimSun}"))
             self.define([r"\ha", r"\hb", r"\hc", r"\neirong"], [
                 r"\fontsize{15.75pt}{\baselineskip}\heiti",
                 r"\fontsize{14pt}{\baselineskip}\heiti",
                 r"\fontsize{12pt}{\baselineskip}\heiti",
                 r"\fontsize{12pt}{\baselineskip}\songti",
             ])
-        self.pre_append(NoEscape(r"\bibliographystyle{plain}"))
+        self.pre_append(NoEscapeStr(r"\bibliographystyle{plain}"))
         self.var_table = table()
 
     def add_abstract(self, content=None, key=None):
@@ -113,18 +114,21 @@ class MathDocument(Document):
         :param key: 摘要关键字
         :return: None
         """
+        ab = Abstract(content, key, self.standard)
         self.body_append(Abstract(content, key, self.standard))
+        return ab
 
     def add_section(self, title=None, content=None, path=None):
         if path:
-            self.add_md(path)  # 问题重述
+            return self.add_md(path)  # 问题重述
         else:
             doc_tree = DocTreeNode({"title": title, "content": content}, auto_font=(self.standard == "XD"))
-            self.body_append(NoEscape("\n"), doc_tree)
+            self.body_append(NoEscapeStr("\n"), doc_tree)
+            return doc_tree
 
     def add_var(self, name, describe=""):
         var = sp.Symbol(name)
-        self.var_table.add_row(NoEscape(f"${name}$"), describe)
+        self.var_table.add_row(NoEscapeStr(f"${name}$"), describe)
         return var
 
     def add_math(self, math, inline=True):
@@ -132,7 +136,9 @@ class MathDocument(Document):
         return math
 
     def add_md(self, path):
-        self.body_append(md2tex(open(path, 'r', encoding='UTF-8')))
+        md = MarkDown(open(path, 'r', encoding='UTF-8'))
+        self.body_append(md)
+        return md
 
     def set_information(self, problem_num="A", team_num="0001", school_name="最强大学",
                         member_names=("a", "b", "c"), supervisor="teacher", date=(2020, 4, 20)):

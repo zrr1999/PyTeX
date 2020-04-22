@@ -8,7 +8,7 @@ This module implements the classes that deal with creating headers and footers.
 
 from .base_classes import ContainerCommand, Command
 from .package import Package
-from .utils import NoEscape
+from .utils import NoEscapeStr
 
 
 class PageStyle(ContainerCommand):
@@ -60,11 +60,11 @@ class PageStyle(ContainerCommand):
 
         if element == "header":
             self.data.append(Command("renewcommand",
-                             arguments=[NoEscape(r"\headrulewidth"),
+                             arguments=[NoEscapeStr(r"\headrulewidth"),
                                         str(thickness) + 'pt']))
         elif element == "footer":
             self.data.append(Command("renewcommand", arguments=[
-                NoEscape(r"\footrulewidth"), str(thickness) + 'pt']))
+                NoEscapeStr(r"\footrulewidth"), str(thickness) + 'pt']))
 
 
 def simple_page_number():
@@ -76,7 +76,7 @@ def simple_page_number():
         The latex string that displays the page number
     """
 
-    return NoEscape(r'Page \thepage\ of \pageref{LastPage}')
+    return NoEscapeStr(r'Page \thepage\ of \pageref{LastPage}')
 
 
 class Head(ContainerCommand):

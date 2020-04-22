@@ -21,7 +21,7 @@ from .figure import Figure, SubFigure, StandAloneGraphic
 from .lists import Enumerate, Itemize, Description
 from .quantities import Quantity
 from .base_classes import Command, UnsafeCommand
-from .utils import NoEscape, escape_latex
+from .utils import NoEscapeStr, escape_latex, MarkDownStr
 from .errors import TableRowSizeError
 from .headfoot import PageStyle, Head, Foot, simple_page_number
 from .position import Center, FlushLeft, FlushRight, MiniPage, TextBlock, \

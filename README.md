@@ -2,10 +2,10 @@
 
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-本代码库借鉴和使用了部分JelteF的[PyLaTex](https://github.com/JelteF/PyLaTeX) 代码。
+本代码库使用了JelteF的[PyLaTex](https://github.com/JelteF/PyLaTeX) 代码并做了一定的修改。
 
 PyTex用于简化Tex的编写，熟练使用本库需要对Python语法基本了解。
-本库适合对LaTex基本语法已经掌握的同学和不会使用LaTex却需要使用LaTex的同学。
+本库对LaTex基本语法要求不高，可以在不会LaTex语法的情况下使用基本功能。
 
 ## 背景
 
@@ -19,6 +19,7 @@ PyTex用于简化Tex的编写，熟练使用本库需要对Python语法基本了
 - Word
     1. 本辅助库可以更加自由地编写文档。
     2. 本辅助库可以借助Python提供更多的功能。
+
 
 ## 安装[![Downloads](https://pepy.tech/badge/bone-pytex)](https://pepy.tech/project/bone-pytex)
 
@@ -45,12 +46,13 @@ doc.set_information(problem_num="A", team_num="0001", school_name="最强大学"
                     member_names=("a", "b", "c"), supervisor="teacher", date=(2020, 4, 20))
 ```
 
-你可以将md转换为latex
+你可以将md文档转换为latex
 
 ```python
-from pytex.utils import md2tex
+from pytex.utils import md2tex, MarkDown
 latex_code1 = md2tex(path="md/abstract.md")
 latex_code2 = md2tex(file=open("md/abstract.md", 'r', encoding='UTF-8'))
+latex_code3 = MarkDown("md/abstract.md")
 ```
 
 你可以在文档中添加标题、摘要、目录。
@@ -92,7 +94,22 @@ doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=Fa
 
 ## 示例
 
-可以参考demo结尾的几个文件。
+完整代码可以参考demo结尾的几个文件。
+
+有时候我们可能需要自定义一些md的转换方式，我们可以通过使用固定的模式来创建新的MD类
+
+```python
+from pytex.utils import MarkDown
+
+
+class TestMDT(MarkDown):
+    def dumps(self):
+        string = self.file.read()
+        string = transform_formula(string)
+        string = transform_struct(string)
+        string = transform_itemize(string)
+        return "begin\n" + string + "end\n"
+```
 
 ## 特色功能
 1. 提供了试卷编写模块，详情见pytex/exam/README.md。
@@ -114,8 +131,9 @@ doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=Fa
 4. 图制作。
 
 ## 更新日志
-- (2020.04. ) v0.1.4 发布
+- (2020.04.22) v0.1.4 发布
     - 完善了markdown到latex的转换功能。
+    - 使用了成熟的MarkDown解析模块，对md的处理更自然了。
 - (2020.04.17) v0.1.3 发布
     - 大幅度优化了数模模块。
     - 优化了结构。
@@ -130,9 +148,7 @@ doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=Fa
 
 ## 维护者
 
-[@詹荣瑞](https://github.com/tczrr1999)、
-[@Lynn-Speng](https://github.com/Lynn-Speng)、
-[@WilsonLuo19](https://github.com/WilsonLuo19)。
+[@詹荣瑞](https://github.com/tczrr1999)
 
 ## 如何贡献
 
@@ -141,7 +157,8 @@ doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=Fa
 ### 贡献者
 
 感谢以下参与项目的人：
-
+[@Lynn-Speng](https://github.com/Lynn-Speng)、
+[@WilsonLuo19](https://github.com/WilsonLuo19)。
 
 ## 使用许可
 

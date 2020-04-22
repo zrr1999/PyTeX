@@ -1,5 +1,5 @@
 import sympy as sp
-from pylatex import NoEscape
+from pylatex import NoEscapeStr
 
 
 class SymbolTransformer(object):
@@ -24,14 +24,14 @@ def sym2tex(symbol, inline, label=None):
     else:
         math_tex = sp.latex(symbol)
     if inline:
-        return NoEscape(f"${math_tex}$")
+        return NoEscapeStr(f"${math_tex}$")
     else:
         if label is not None:
-            return NoEscape(f"\\begin{{equation}}\n"
+            return NoEscapeStr(f"\\begin{{equation}}\n"
                             f"\\label{{{label}}}\n"
                             f"{math_tex}\n"
                             f"\\end{{equation}}"), label
         else:
-            return NoEscape(f"\\begin{{equation}}\n"
+            return NoEscapeStr(f"\\begin{{equation}}\n"
                             f"{math_tex}\n"
                             r"\end{equation}")

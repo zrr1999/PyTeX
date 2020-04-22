@@ -1,5 +1,8 @@
-from pylatex import Section, NoEscape, NewLine, Package, LongTable
+from pylatex import Section, NoEscapeStr, NewLine, Package, LongTable
 from pylatex.base_classes import Environment, Options, Command, LatexObject
+
+
+# class Table(object):
 
 
 def long_table(num=2, title=("符号", "说明")):

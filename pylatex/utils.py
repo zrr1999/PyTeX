@@ -28,6 +28,20 @@ _latex_special_chars = {
     '[': r'{[}',
     ']': r'{]}',
 }
+_markdown_special_chars = {
+    '&': r'\&',
+    '%': r'\%',
+    '#': r'\#',
+    '_': r'\_',
+    '~': r'\textasciitilde{}',
+    '^': r'\^{}',
+    '\\': r'\textbackslash{}',
+    '-': r'{-}',
+    '\xA0': '~',  # Non-breaking space
+    '[': r'{[}',
+    ']': r'{]}',
+}
+
 
 _tmp_path = os.path.abspath(
     os.path.join(
@@ -41,18 +55,18 @@ def _is_iterable(element):
     return hasattr(element, '__iter__') and not isinstance(element, str)
 
 
-class NoEscape(str):
+class NoEscapeStr(str):
     """
     A simple string class that is not escaped.
 
-    When a `.NoEscape` string is added to another `.NoEscape` string it will
-    produce a `.NoEscape` string. If it is added to normal string it will
+    When a `.NoEscapeStr` string is added to another `.NoEscapeStr` string it will
+    produce a `.NoEscapeStr` string. If it is added to normal string it will
     produce a normal string.
 
     Args
     ----
     string: str
-        The content of the `NoEscape` string.
+        The content of the `NoEscapeStr` string.
     """
 
     def __repr__(self):
@@ -60,8 +74,32 @@ class NoEscape(str):
 
     def __add__(self, right):
         s = super().__add__(right)
-        if isinstance(right, NoEscape):
-            return NoEscape(s)
+        if isinstance(right, NoEscapeStr):
+            return NoEscapeStr(s)
+        return s
+
+
+class MarkDownStr(str):
+    """
+    A simple string class that is not escaped.
+
+    When a `.NoEscapeStr` string is added to another `.NoEscapeStr` string it will
+    produce a `.NoEscapeStr` string. If it is added to normal string it will
+    produce a normal string.
+
+    Args
+    ----
+    string: str
+        The content of the `NoEscapeStr` string.
+    """
+
+    def __repr__(self):
+        return '%s(%s)' % (self.__class__.__name__, self)
+
+    def __add__(self, right):
+        s = super().__add__(right)
+        if isinstance(right, MarkDownStr):
+            return MarkDownStr(s)
         return s
 
 
@@ -70,14 +108,14 @@ def escape_latex(s):
 
     Args
     ----
-    s : `str`, `NoEscape` or anything that can be converted to string
+    s : `str`, `NoEscapeStr` or anything that can be converted to string
         The string to be escaped. If this is not a string, it will be converted
-        to a string using `str`. If it is a `NoEscape` string, it will pass
+        to a string using `str`. If it is a `NoEscapeStr` string, it will pass
         through unchanged.
 
     Returns
     -------
-    NoEscape
+    NoEscapeStr
         The string, with special characters in latex escaped.
 
     Examples
@@ -94,10 +132,12 @@ def escape_latex(s):
         * http://stackoverflow.com/a/16264094/2570866
     """
 
-    if isinstance(s, NoEscape):
+    if isinstance(s, NoEscapeStr):
         return s
+    elif isinstance(s, MarkDownStr):
+        return NoEscapeStr(''.join(_markdown_special_chars.get(c, c) for c in str(s)))
 
-    return NoEscape(''.join(_latex_special_chars.get(c, c) for c in str(s)))
+    return NoEscapeStr(''.join(_latex_special_chars.get(c, c) for c in str(s)))
 
 
 def fix_filename(path):
@@ -167,7 +207,7 @@ def dumps_list(l, *, escape=True, token='%\n', mapper=None, as_content=True):
 
     Returns
     -------
-    NoEscape
+    NoEscapeStr
         A single LaTeX string.
 
     Examples
@@ -196,7 +236,7 @@ def dumps_list(l, *, escape=True, token='%\n', mapper=None, as_content=True):
             strings = [m(s) for s in strings]
         strings = [_latex_item_to_string(s) for s in strings]
 
-    return NoEscape(token.join(strings))
+    return NoEscapeStr(token.join(strings))
 
 
 def _latex_item_to_string(item, *, escape=False, as_content=False):
@@ -214,7 +254,7 @@ def _latex_item_to_string(item, *, escape=False, as_content=False):
 
     Returns
     -------
-    NoEscape
+    NoEscapeStr
         Latex
     """
 
@@ -246,7 +286,7 @@ def bold(s, *, escape=True):
 
     Returns
     -------
-    NoEscape
+    NoEscapeStr
         The formatted string.
 
     Examples
@@ -260,7 +300,7 @@ def bold(s, *, escape=True):
     if escape:
         s = escape_latex(s)
 
-    return NoEscape(r'\textbf{' + s + '}')
+    return NoEscapeStr(r'\textbf{' + s + '}')
 
 
 def italic(s, *, escape=True):
@@ -277,7 +317,7 @@ def italic(s, *, escape=True):
 
     Returns
     -------
-    NoEscape
+    NoEscapeStr
         The formatted string.
 
     Examples
@@ -290,7 +330,7 @@ def italic(s, *, escape=True):
     if escape:
         s = escape_latex(s)
 
-    return NoEscape(r'\textit{' + s + '}')
+    return NoEscapeStr(r'\textit{' + s + '}')
 
 
 def verbatim(s, *, delimiter='|'):
@@ -307,7 +347,7 @@ def verbatim(s, *, delimiter='|'):
 
     Returns
     -------
-    NoEscape
+    NoEscapeStr
         The formatted string.
 
     Examples
@@ -320,7 +360,7 @@ def verbatim(s, *, delimiter='|'):
     \verb!pi|pe!
     """
 
-    return NoEscape(r'\verb' + delimiter + s + delimiter)
+    return NoEscapeStr(r'\verb' + delimiter + s + delimiter)
 
 
 def make_temp_dir():

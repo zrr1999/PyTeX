@@ -1,43 +1,36 @@
 import re
 from .symbol2tex import sym2tex
-from pylatex import NoEscape
+from pylatex import MarkDownStr, NoEscapeStr
 from pylatex.base_classes import LatexObject
+from ..renderer import markdown
 
 
 class MarkDown(LatexObject):
     """
-    MarkDown文件中第一行为文件模式，第二行为 # +标题名，非Section留空行
+    (暂未实现)MarkDown文件中第一行为文件模式，第二行为 # +标题名，非Section留空行
 
     """
-    def __init__(self, file_path, file_type="sec"):
+    def __init__(self, file_path, mode='r', file_type="sec"):
         super().__init__()
-        self.file = open(file_path, 'r', encoding='UTF-8')
-        self.mode = next(self.file)
-        string = next(self.file)
-        if file_type == "sec":
-            loc = re.match(r"# (\S+)", string).span()
-            self._latex_name = string[loc[0]+2, loc[1]]
+        if isinstance(file_path, str):
+            self.file = open(file_path, mode=mode, encoding='UTF-8')
+        else:
+            self.file = file_path
 
     def dumps(self):
-        return md2tex(self.file)
+        string = self.file.read()
+        return NoEscapeStr(markdown(string))
 
 
-def md2tex(file=None, path=None, mode='r'):
+def md2tex(file_path, mode='r'):
     """
 
-    :param file: 传入的文件
-    :param path:
+    :param file_path: 传入的文件或文件地址
     :param mode:
     :return:
     """
-    if file:
-        string = file.read()
-    else:
-        string = open(path, mode, encoding='UTF-8').read()
-    string = transform_formula(string)
-    string = transform_struct(string)
-    string = transform_itemize(string)
-    return NoEscape(string)
+    md = MarkDown(file_path, mode)
+    return md
 
 
 def transform_formula(string):

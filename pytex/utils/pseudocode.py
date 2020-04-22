@@ -1,7 +1,7 @@
 import re
 from pylatex.base_classes import Environment, Options, Command
 from pylatex.package import Package
-from pylatex.utils import NoEscape
+from pylatex.utils import NoEscapeStr
 
 
 class PseudoCodeEnv(Environment):

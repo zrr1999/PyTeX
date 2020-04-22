@@ -1,4 +1,4 @@
-from pylatex import Section, NoEscape, NewLine, Package
+from pylatex import Section, NoEscapeStr, NewLine, Package
 from pylatex.base_classes import Environment, Options, Command, LatexObject
 
 
@@ -14,11 +14,11 @@ class Appendices(Environment):
         if isinstance(files, list):
             for i, file in enumerate(files):
                 if isinstance(line_sum, list):
-                    self.append(NoEscape(f"{file}\n\\inputpython{{{self.path + file}}}{{1}}{{{line_sum[i]}}}\n"))
+                    self.append(NoEscapeStr(f"{file}\n\\inputpython{{{self.path + file}}}{{1}}{{{line_sum[i]}}}\n"))
                 else:
-                    self.append(NoEscape(f"{file}\n\\inputpython{{{self.path + file}}}{{1}}{{{line_sum}}}\n"))
+                    self.append(NoEscapeStr(f"{file}\n\\inputpython{{{self.path + file}}}{{1}}{{{line_sum}}}\n"))
         else:
-            self.append(NoEscape(f"{files}\n\\inputpython{{{self.path + files}}}{{1}}{{{line_sum}}}\n"))
+            self.append(NoEscapeStr(f"{files}\n\\inputpython{{{self.path + files}}}{{1}}{{{line_sum}}}\n"))
 
 
 def appendices(path, files, line_sum):

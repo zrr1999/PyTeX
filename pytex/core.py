@@ -1,4 +1,4 @@
-from pylatex import NoEscape, Package, Command, Document, NewPage
+from pylatex import NoEscapeStr, Package, Command, Document, NewPage
 import re
 
 
@@ -65,6 +65,6 @@ class Core(Document):
 
         if type(names) is list:
             for i, name in enumerate(names):
-                self.preamble.append(Command(new_command, [NoEscape(name), NoEscape(codes[i])]))
+                self.preamble.append(Command(new_command, [NoEscapeStr(name), NoEscapeStr(codes[i])]))
         else:
-            self.preamble.append(Command(new_command, [NoEscape(names), NoEscape(codes)]))
+            self.preamble.append(Command(new_command, [NoEscapeStr(names), NoEscapeStr(codes)]))

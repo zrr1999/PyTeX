@@ -10,7 +10,7 @@ from .base_classes import LatexObject, Container, Command, UnsafeCommand, \
     Float, Environment
 from .package import Package
 from .errors import TableRowSizeError, TableError
-from .utils import dumps_list, NoEscape, _is_iterable
+from .utils import dumps_list, NoEscapeStr, _is_iterable
 import pylatex.config as cf
 
 from collections import Counter
@@ -103,7 +103,7 @@ class Tabular(Environment):
         self.col_space = col_space
 
         super().__init__(data=data, options=pos,
-                         arguments=NoEscape(table_spec),
+                         arguments=NoEscapeStr(table_spec),
                          **kwargs)
 
         # Parameter that determines if the xcolor package has been added.
@@ -116,13 +116,13 @@ class Tabular(Environment):
 
         if self.row_height is not None:
             row_height = Command('renewcommand', arguments=[
-                NoEscape(r'\arraystretch'),
+                NoEscapeStr(r'\arraystretch'),
                 self.row_height])
             string += row_height.dumps() + '%\n'
 
         if self.col_space is not None:
             col_space = Command('setlength', arguments=[
-                NoEscape(r'\tabcolsep'),
+                NoEscapeStr(r'\tabcolsep'),
                 self.col_space])
             string += col_space.dumps() + '%\n'
 
@@ -153,7 +153,7 @@ class Tabular(Environment):
         if self.booktabs:
             content += '\\bottomrule%\n'
 
-        return NoEscape(content)
+        return NoEscapeStr(content)
 
     def add_hline(self, start=None, end=None, *, color=None,
                   cmidruleoption=None):
@@ -196,12 +196,12 @@ class Tabular(Environment):
                 end = self.width
 
             self.append(Command(cline,
-                                dumps_list([start, NoEscape('-'), end])))
+                                dumps_list([start, NoEscapeStr('-'), end])))
 
     def add_empty_row(self):
         """Add an empty row to the table."""
 
-        self.append(NoEscape((self.width - 1) * '&' + r'\\'))
+        self.append(NoEscapeStr((self.width - 1) * '&' + r'\\'))
 
     def add_row(self, *cells, color=None, escape=None, mapper=None,
                 strict=True):
@@ -258,7 +258,7 @@ class Tabular(Environment):
             self.append(color_command)
 
         self.append(dumps_list(cells, escape=escape, token='&',
-                    mapper=mapper) + NoEscape(r'\\'))
+                    mapper=mapper) + NoEscapeStr(r'\\'))
 
 
 class Tabularx(Tabular):
@@ -266,7 +266,7 @@ class Tabularx(Tabular):
 
     packages = [Package('tabularx')]
 
-    def __init__(self, *args, width_argument=NoEscape(r'\textwidth'),
+    def __init__(self, *args, width_argument=NoEscapeStr(r'\textwidth'),
                  **kwargs):
         """
         Args

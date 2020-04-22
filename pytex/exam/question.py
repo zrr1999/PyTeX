@@ -1,5 +1,5 @@
 from pylatex import Subsection, Enumerate
-from pylatex.utils import NoEscape
+from pylatex.utils import NoEscapeStr
 
 chinese_nums = ["一", "二", "三", "四", "五", "六"]
 
@@ -37,15 +37,15 @@ class Question:
         title = f"{self.name}: {title}{self.describe}"
         with self.core.create(Subsection(f'{chinese_nums[self.number]}、' + title, False)):
             with self.core.create(Enumerate()) as enum:
-                self.core.append(NoEscape(r"\addtocounter{enumi}" + f"{{{self.core.num}}}"))
+                self.core.append(NoEscapeStr(r"\addtocounter{enumi}" + f"{{{self.core.num}}}"))
                 for i, problem in enumerate(problems):
                     if type(scores) is list:
-                        enum.add_item(NoEscape(f"(本题{scores[i]}分)" + problem))
+                        enum.add_item(NoEscapeStr(f"(本题{scores[i]}分)" + problem))
                     else:
                         if type(problem) is str:
-                            enum.add_item(NoEscape(problem))
+                            enum.add_item(NoEscapeStr(problem))
                         else:
                             enum.add_item(problem)
-                    enum.append(NoEscape(f"\\\\[{line_space}mm]"))
+                    enum.append(NoEscapeStr(f"\\\\[{line_space}mm]"))
 
         self.core.num += n

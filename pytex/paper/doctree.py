@@ -1,4 +1,4 @@
-from pylatex import Section, Subsection, Subsubsection, Package, Command, NoEscape
+from pylatex import Section, Subsection, Subsubsection, Package, Command, NoEscapeStr
 from pylatex.base_classes import LatexObject
 import sympy as sp
 from .section import Section
@@ -10,7 +10,7 @@ font = ["hb", "hc", "hc"]
 class DocTreeNode(Section):
     def __init__(self, struct, top=0, auto_font=False):
         if auto_font:
-            super().__init__(NoEscape(Command(font[top], struct["title"]).dumps()))
+            super().__init__(NoEscapeStr(Command(font[top], struct["title"]).dumps()))
         else:
             super().__init__(struct["title"])
 

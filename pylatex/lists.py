@@ -10,7 +10,7 @@ These lists are specifically enumerate, itemize and description.
 
 from .base_classes import Environment, Command, Options
 from .package import Package
-from pylatex.utils import NoEscape
+from pylatex.utils import NoEscapeStr
 
 
 class List(Environment):
@@ -58,7 +58,7 @@ class Enumerate(List):
                 options = Options(options)
             else:
                 options = Options()
-            options._positional_args.append(NoEscape('label=' +
+            options._positional_args.append(NoEscapeStr('label=' +
                                                      enumeration_symbol))
 
         super().__init__(options=options, **kwargs)

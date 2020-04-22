@@ -16,7 +16,7 @@ from operator import itemgetter
 
 from .base_classes import Command
 from .package import Package
-from .utils import NoEscape, escape_latex
+from .utils import NoEscapeStr, escape_latex
 
 
 # Translations for names used in the quantities package to ones used by SIunitx
@@ -63,15 +63,15 @@ def _dimensionality_to_siunitx(dim):
         if power > 1:
             substring += r'\tothe{' + str(power) + '}'
         string += substring
-    return NoEscape(string)
+    return NoEscapeStr(string)
 
 
 class Quantity(Command):
     """A class representing quantities."""
 
     packages = [
-        Package('siunitx', options=[NoEscape('separate-uncertainty=true')]),
-        NoEscape('\\DeclareSIUnit\\rpm{rpm}')
+        Package('siunitx', options=[NoEscapeStr('separate-uncertainty=true')]),
+        NoEscapeStr('\\DeclareSIUnit\\rpm{rpm}')
     ]
 
     def __init__(self, quantity, *, options=None, format_cb=None):

@@ -1,11 +1,11 @@
-from pylatex import Subsection, Enumerate, NoEscape, NewLine
+from pylatex import Subsection, Enumerate, NoEscapeStr, NewLine
 from pylatex.base_classes import Environment, Options, Command, LatexObject, CommandBase
 
 
 class Key(LatexObject):
     def __init__(self, name):
         super().__init__()
-        self.key = NoEscape(f"\\textbf {{{name}: }}")
+        self.key = NoEscapeStr(f"\\textbf {{{name}: }}")
 
     def append(self, key):
         if isinstance(key, list):
@@ -14,7 +14,7 @@ class Key(LatexObject):
             self.key += key + r"\quad "
 
     def dumps(self):
-        return NoEscape(self.key)
+        return NoEscapeStr(self.key)
 
 
 class Keywords(CommandBase):
@@ -50,7 +50,7 @@ class Abstract(Environment):
         if standard == "GJS":
             self.key = Keywords()
         else:
-            self.append(NoEscape(r"\neirong"))
+            self.append(NoEscapeStr(r"\neirong"))
             self.key = Key("关键词")
         if content:
             self.add_content(content)
@@ -61,7 +61,7 @@ class Abstract(Environment):
         self.append(s)
         if self.standard == "XD":
             if space:
-                self.append(NoEscape(r"\vspace{" + space + "cm}"))
+                self.append(NoEscapeStr(r"\vspace{" + space + "cm}"))
             else:
                 self.append(NewLine())
         self.append(self.key)
@@ -71,4 +71,4 @@ class Abstract(Environment):
 
 
 def abstract(content, key):
-    return Abstract(NoEscape(content), key)
+    return Abstract(NoEscapeStr(content), key)

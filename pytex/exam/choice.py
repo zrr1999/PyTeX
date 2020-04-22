@@ -1,6 +1,6 @@
 from pylatex.base_classes import Environment, Options, Command
 from pylatex.package import Package
-from pylatex.utils import NoEscape
+from pylatex.utils import NoEscapeStr
 
 
 class Tasks(Environment):
@@ -36,5 +36,5 @@ def choice(describe, *items, line_num=4, options=None, **kwargs):
     co = Tasks(options=options, **kwargs)
     co.append(f"({line_num})")
     for item in items:
-        co.add_task(NoEscape(item))
-    return NoEscape(describe + co.dumps())
+        co.add_task(NoEscapeStr(item))
+    return NoEscapeStr(describe + co.dumps())

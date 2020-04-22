@@ -10,7 +10,7 @@ Positions various elements on the page.
 
 from .base_classes import Environment, SpecialOptions, Command, CommandBase
 from .package import Package
-from .utils import NoEscape
+from .utils import NoEscapeStr
 
 
 class HorizontalSpace(CommandBase):
@@ -72,7 +72,7 @@ class MiniPage(Environment):
         "align": "options"
     }
 
-    def __init__(self, *, width=NoEscape(r'\textwidth'), pos=None,
+    def __init__(self, *, width=NoEscapeStr(r'\textwidth'), pos=None,
                  height=None, content_pos=None, align=None, fontsize=None,
                  data=None):
         r"""
@@ -102,7 +102,7 @@ class MiniPage(Environment):
             options.append(pos)
 
         if height is not None:
-            options.append(NoEscape(height))
+            options.append(NoEscapeStr(height))
 
         if ((content_pos is not None) and (pos is not None) and
            (height is not None)):
@@ -110,7 +110,7 @@ class MiniPage(Environment):
 
         options = SpecialOptions(*options)
 
-        arguments = [NoEscape(str(width))]
+        arguments = [NoEscapeStr(str(width))]
 
         extra_data = []
 
@@ -175,4 +175,4 @@ class TextBlock(Environment):
                     str(self.vertical_pos)))
 
         if not indent:
-            self.append(NoEscape(r'\noindent'))
+            self.append(NoEscapeStr(r'\noindent'))
