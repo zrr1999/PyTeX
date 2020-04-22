@@ -20,7 +20,7 @@ extras = {
 
 setup(
     name="bone-pytex",
-    version="0.1.3.b",
+    version="0.1.5.a",
     keywords=("LaTex", "MarkDown"),
     description="一个用来简化LaTex编写的python库",
     long_description="一个用来简化LaTex编写的python库",

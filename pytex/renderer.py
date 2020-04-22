@@ -2,7 +2,7 @@ from mistune import escape, Markdown, escape_html
 from mistune.renderers import BaseRenderer
 import re
 
-FORMULA_PATTERN = re.compile(r"\$\$\n(.+)\n\$\$")
+FORMULA_PATTERN = re.compile(r"\$\$\n((.+\n)*)\$\$")
 
 
 def parse_formula(self, m, state):
@@ -11,7 +11,7 @@ def parse_formula(self, m, state):
 
 
 def render_tex_formula(text):
-    return '\\begin{equation}\n' + text + '\n\\end{equation}\n'
+    return '\n\\begin{equation}\n' + text + '\\end{equation}\n'
 
 
 def plugin_formula(md):
@@ -107,7 +107,6 @@ class Renderer(BaseRenderer):
             ordered = "enumerate"
         else:
             ordered = "itemize"
-        print(start)
         return f'\\begin{{{ordered}}}\n{text}\\end{{{ordered}}}\n'
 
     def list_item(self, text, level):
@@ -117,6 +116,4 @@ class Renderer(BaseRenderer):
 markdown = Markdown(Renderer(), plugins=[plugin_formula])
 
 if __name__ == '__main__':
-    markdown = Markdown(Renderer(True), plugins=[plugin_formula])
-    s = markdown(r"*asdfasdf*\\%%>><<\%\\%")
-    print(s)
+    markdown = Markdown(Renderer(), plugins=[plugin_formula])
