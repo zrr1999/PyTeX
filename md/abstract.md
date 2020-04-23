@@ -18,3 +18,9 @@
 
 综上所述，本文通过建立供求匹配模型，缓解程度判断模型，对出租车资源的供求匹配程度和补贴方案进行了分析，
 并设计了分区域动态实时补贴方案，这对于今后的实际生产和应用具有重要的参考价值。
+
+测试
+
+[test](www.baidu.com)
+
+![avatar](C:/Users/tczrr/PycharmProjects/FrameworkImplementationProjects/PyTex/resources/timg.jpg "scale=0.6")

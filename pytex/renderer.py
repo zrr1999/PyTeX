@@ -3,6 +3,7 @@ from mistune.renderers import BaseRenderer
 import re
 
 FORMULA_PATTERN = re.compile(r"\$\$\n((.+\n)*)\$\$")
+VAR_PATTERN = r"\{(.+)}"
 
 
 def parse_formula(self, m, state):
@@ -14,21 +15,34 @@ def render_tex_formula(text):
     return '\n\\begin{equation}\n' + text + '\\end{equation}\n'
 
 
-def plugin_formula(md):
+def parse_var(self, m, state):
+    text = self.var[m.group(1)]
+    return {'type': 'formula', 'text': text}
+
+
+def render_tex_var(text):
+    return '$' + text + '$'
+
+
+def plugin_pytex(md):
     md.block.register_rule('formula', FORMULA_PATTERN, parse_formula)
     md.block.rules.append('formula')
+    # md.inline.register_rule('var', VAR_PATTERN, parse_var)
+    # md.inline.rules.append('var')
 
     if md.renderer.NAME == 'tex':
         md.renderer.register('formula', render_tex_formula)
+        # md.renderer.register('var', render_tex_var)
 
 
 class Renderer(BaseRenderer):
     NAME = 'tex'
     IS_TREE = False
 
-    def __init__(self, escape=False):
+    def __init__(self, escape=False, **var):
         super().__init__()
         self._escape = escape
+        self.var = var
 
     def text(self, text):
         return text.replace("%", r"\%")
@@ -36,17 +50,10 @@ class Renderer(BaseRenderer):
     def link(self, link, text=None, title=None):
         if text is None:
             text = link
-
-        s = '<a href="' + self._safe_url(link) + '"'
-        if title:
-            s += ' title="' + escape_html(title) + '"'
-        return s + '>' + (text or link) + '</a>'
+        return f"\\href{{{link}}}{{{text}}}"
 
     def image(self, src, alt="", title=None):
-        s = '<img src="' + src + '" alt="' + alt + '"'
-        if title:
-            s += ' title="' + escape_html(title) + '"'
-        return s + ' />'
+        return f"\\includegraphics[{title}]{{{src}}}"
 
     def emphasis(self, text):
         return '\\emph{' + text + '}'
@@ -113,7 +120,8 @@ class Renderer(BaseRenderer):
         return '\\item\n' + text + '\n'
 
 
-markdown = Markdown(Renderer(), plugins=[plugin_formula])
+markdown = Markdown(Renderer(), plugins=[plugin_pytex])
 
 if __name__ == '__main__':
-    markdown = Markdown(Renderer(), plugins=[plugin_formula])
+    markdown = Markdown(Renderer(), plugins=[plugin_pytex])
+    print(markdown("fasdfasdf"))

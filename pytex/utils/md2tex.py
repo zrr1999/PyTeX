@@ -10,16 +10,20 @@ class MarkDown(LatexObject):
     (暂未实现)MarkDown文件中第一行为文件模式，第二行为 # +标题名，非Section留空行
 
     """
-    def __init__(self, file_path, mode='r', file_type="sec"):
+    def __init__(self, file_path, mode='r', md=None):
         super().__init__()
         if isinstance(file_path, str):
             self.file = open(file_path, mode=mode, encoding='UTF-8')
         else:
             self.file = file_path
+        self.md = md
 
     def dumps(self):
         string = self.file.read()
-        return NoEscapeStr(markdown(string))
+        if self.md:
+            return NoEscapeStr(self.md(string))
+        else:
+            return NoEscapeStr(markdown(string))
 
 
 def md2tex(file_path, mode='r'):

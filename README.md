@@ -23,7 +23,9 @@ PyTex用于简化Tex的编写，熟练使用本库需要对Python语法基本了
 
 ## 安装[![Downloads](https://pepy.tech/badge/bone-pytex)](https://pepy.tech/project/bone-pytex)
 
-这个项目使用 [Python](https://www.python.org/downloads/) 开发，请确保你本地安装了它。建议使用pip安装。
+这个项目使用 [Python](https://www.python.org/downloads/) 开发，请确保你本地安装了它。
+
+建议使用pip安装本库。
 
 ```sh
 $ pip install bone-pytex
@@ -95,21 +97,6 @@ doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=Fa
 ## 示例
 
 完整代码可以参考demo结尾的几个文件。
-
-有时候我们可能需要自定义一些md的转换方式，我们可以通过使用固定的模式来创建新的MD类
-
-```python
-from pytex.utils import MarkDown
-
-
-class TestMDT(MarkDown):
-    def dumps(self):
-        string = self.file.read()
-        string = transform_formula(string)
-        string = transform_struct(string)
-        string = transform_itemize(string)
-        return "begin\n" + string + "end\n"
-```
 
 ## 特色功能
 1. 提供了试卷编写模块，详情见pytex/exam/README.md。

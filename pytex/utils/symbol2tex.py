@@ -28,10 +28,10 @@ def sym2tex(symbol, inline, label=None):
     else:
         if label is not None:
             return NoEscapeStr(f"\\begin{{equation}}\n"
-                            f"\\label{{{label}}}\n"
-                            f"{math_tex}\n"
-                            f"\\end{{equation}}"), label
+                               f"\\label{{{label}}}\n"
+                               f"{math_tex}\n"
+                               f"\\end{{equation}}"), label
         else:
             return NoEscapeStr(f"\\begin{{equation}}\n"
-                            f"{math_tex}\n"
-                            r"\end{equation}")
+                               f"{math_tex}\n"
+                               r"\end{equation}")

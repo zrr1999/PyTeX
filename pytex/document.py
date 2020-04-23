@@ -131,8 +131,11 @@ class MathDocument(Document):
         self.var_table.add_row(NoEscapeStr(f"${name}$"), describe)
         return var
 
-    def add_math(self, math, inline=True):
-        self.body_append(sym2tex(math, inline))
+    def add_math(self, math=None, inline=True):
+        if math is None:
+            pass
+        else:
+            self.body_append(sym2tex(math, inline))
         return math
 
     def add_md(self, path):
