@@ -21,6 +21,13 @@
 
 测试
 
-[test](www.baidu.com)
+[test](www.baidu.com) 
 
-![avatar](C:/Users/tczrr/PycharmProjects/FrameworkImplementationProjects/PyTex/resources/timg.jpg "scale=0.6")
+```python
+asdfadsfasdffff
+asdfffdaf
+```
+
+
+
+![avatar](C:/Users/tczrr/PycharmProjects/FrameworkImplementationProjects/PyTex/resources/timg.jpg "scale=0.3")

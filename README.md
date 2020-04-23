@@ -4,12 +4,11 @@
 
 本代码库使用了JelteF的[PyLaTex](https://github.com/JelteF/PyLaTeX) 代码并做了一定的修改。
 
-PyTex用于简化Tex的编写，熟练使用本库需要对Python语法基本了解。
-本库对LaTex基本语法要求不高，可以在不会LaTex语法的情况下使用基本功能。
+PyTex主要用于简化LaTex的编写，你也可以把它当做一个MarkDown到LaTex代码的转换工具。LaTex语法并不是使用本库必须的要求，但是熟悉LaTex语法有助于更好的使用本库。
 
 ## 背景
 
-某天突发奇想要做个LaTex的辅助编写工具，于是就开始了。
+...
 
 ## 优势
 - LaTex

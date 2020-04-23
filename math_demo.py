@@ -5,7 +5,8 @@ from pytex.base import table
 from pytex.utils import SymbolTransformer, md2tex
 
 
-doc = MathDocument('数学建模', packages=["amsmath", "graphicx", "amssymb", "cite", "hyperref"],
+doc = MathDocument('数学建模',
+                   packages=["amsmath", "graphicx", "amssymb", "cite", "hyperref", "pythonhighlight"],
                    standard="GJS", preface=False)
 doc.set_information()
 # doc.add_pdf("standard.pdf")  # 你可以使用你自己的标准页（GJS标准默认参数会自带标准页）

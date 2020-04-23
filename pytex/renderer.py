@@ -83,20 +83,20 @@ class Renderer(BaseRenderer):
         return ''
 
     def thematic_break(self):
-        return '<hr />\n'
+        # return '<hr />\n'
+        return '\n'
 
     def block_text(self, text):
         return text
 
     def block_code(self, code, info=None):
-        html = '<pre><code'
+        html = '\\begin{python}\n'
         if info is not None:
             info = info.strip()
         if info:
             lang = info.split(None, 1)[0]
             lang = escape_html(lang)
-            html += ' class="language-' + lang + '"'
-        return html + '>' + escape(code) + '</code></pre>\n'
+        return html + escape(code) + '\\end{python}\n'
 
     def block_quote(self, text):
         return '<blockquote>\n' + text + '</blockquote>\n'
