@@ -1,6 +1,6 @@
 # PyTex
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)![Upload Python Package](https://github.com/zrr1999/PyTex/workflows/Upload%20Python%20Package/badge.svg)
 
 本代码库使用了JelteF的[PyLaTex](https://github.com/JelteF/PyLaTeX) 代码并做了一定的修改。
 
@@ -117,8 +117,10 @@ doc.generate_pdf('resources/math', compiler='XeLatex', clean_tex=False, clean=Fa
 4. 图制作。
 
 ## 更新日志
+- (2020.04.24) v0.1.5 发布
+    - 支持MarkDown的图片、超链接、代码块到LaTex的转换。
 - (2020.04.22) v0.1.4 发布
-    - 完善了markdown到latex的转换功能。
+    - 完善了MarkDown到LaTex的转换功能。
     - 使用了成熟的MarkDown解析模块，对md的处理更自然了。
 - (2020.04.17) v0.1.3 发布
     - 大幅度优化了数模模块。

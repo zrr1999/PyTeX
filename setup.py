@@ -3,9 +3,9 @@
 from setuptools import setup, find_packages
 import sys
 
-with open("README.md", "rb") as fh:
+with open("README.md", "r", encoding='UTF-8') as fh:
     long_description = fh.read()
-
+print(long_description)
 extras = {
     'docs': ['sphinx'],
     'matrices': ['numpy'],
@@ -20,10 +20,11 @@ extras = {
 
 setup(
     name="bone-pytex",
-    version="0.1.5.a",
+    version="0.1.5",
     keywords=("LaTex", "MarkDown"),
     description="一个用来简化LaTex编写的python库",
-    long_description="一个用来简化LaTex编写的python库",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     license="GPL-3.0 Licence",
     url="https://github.com/tczrr1999/PyTex",
     author="zrr",
