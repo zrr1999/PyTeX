@@ -1,7 +1,7 @@
 # PyTex
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)![Upload Python Package]
-(https://github.com/zrr1999/PyTex/workflows/Upload%20Python%20Package/badge.svg)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+![Upload Python Package](https://github.com/zrr1999/PyTex/workflows/Upload%20Python%20Package/badge.svg)
 
 本代码库使用了JelteF的[PyLaTex](https://github.com/JelteF/PyLaTeX) 代码并做了一定的修改。
 
