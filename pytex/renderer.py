@@ -4,7 +4,8 @@ import re
 
 FORMULA_PATTERN = re.compile(r"\$\$\n((.+\n)*)\$\$")
 VAR_PATTERN = r"\{(.+)}"
-
+KAY_PATTERN = r"关键字：((.+)*)"
+# FORMULA_PATTERN.match().
 
 def parse_formula(self, m, state):
     text = m.group(1)
@@ -13,6 +14,15 @@ def parse_formula(self, m, state):
 
 def render_tex_formula(text):
     return '\n\\begin{equation}\n' + text + '\\end{equation}\n'
+
+
+def parse_key(self, m, state):
+    text = m.group(1)
+    return 'keywords', text
+
+
+def render_tex_key(text):
+    return r"\keywords{" + text.replace(' ', r"\quad ") + "}"
 
 
 def parse_var(self, m, state):
@@ -27,11 +37,14 @@ def render_tex_var(text):
 def plugin_pytex(md):
     md.block.register_rule('formula', FORMULA_PATTERN, parse_formula)
     md.block.rules.append('formula')
+    md.inline.register_rule('keywords', KAY_PATTERN, parse_key)
+    md.inline.rules.append('keywords')
     # md.inline.register_rule('var', VAR_PATTERN, parse_var)
     # md.inline.rules.append('var')
 
     if md.renderer.NAME == 'tex':
         md.renderer.register('formula', render_tex_formula)
+        md.renderer.register('keywords', render_tex_key)
         # md.renderer.register('var', render_tex_var)
 
 
@@ -62,7 +75,8 @@ class Renderer(BaseRenderer):
         return '\\textbf{' + text + '}'
 
     def codespan(self, text):
-        return '<code>' + escape(text) + '</code>'
+        # return '<code>' + escape(text) + '</code>'
+        return escape(text)
 
     def linebreak(self):
         return '\\newline\n'

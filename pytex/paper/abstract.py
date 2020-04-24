@@ -47,11 +47,14 @@ class Abstract(Environment):
     def __init__(self, content=None, key=None, standard="XD", **kwargs):
         super().__init__(**kwargs)
         self.standard = standard
-        if standard == "GJS":
-            self.key = Keywords()
+        if key is not None:
+            if standard == "GJS":
+                self.key = Keywords()
+            else:
+                self.append(NoEscapeStr(r"\neirong"))
+                self.key = Key("关键词")
         else:
-            self.append(NoEscapeStr(r"\neirong"))
-            self.key = Key("关键词")
+            self.key = None
         if content:
             self.add_content(content)
         if key:
@@ -64,7 +67,8 @@ class Abstract(Environment):
                 self.append(NoEscapeStr(r"\vspace{" + space + "cm}"))
             else:
                 self.append(NewLine())
-        self.append(self.key)
+        if self.key:
+            self.append(self.key)
 
     def add_key(self, key):
         self.key.append(key)

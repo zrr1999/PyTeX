@@ -115,7 +115,7 @@ class MathDocument(Document):
         :return: None
         """
         ab = Abstract(content, key, self.standard)
-        self.body_append(Abstract(content, key, self.standard))
+        self.body_append(ab)
         return ab
 
     def add_section(self, title=None, content=None, path=None):

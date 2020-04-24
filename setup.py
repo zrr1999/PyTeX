@@ -36,7 +36,7 @@ setup(
     ],
     include_package_data=True,
     platforms="any",
-    install_requires=['sympy', 'ordered-set', 'markdown', 'mistune'],
+    install_requires=['sympy', 'ordered-set', 'mistune'],
     extras_require=extras,
     scripts=[],
     # entry_points={
