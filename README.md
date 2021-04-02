@@ -3,6 +3,8 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 ![Upload Python Package](https://github.com/zrr1999/PyTex/workflows/Upload%20Python%20Package/badge.svg)
 
+本代码仓库已经不再进行维护，有使用Python代码生成LaTeX需求的用户可以考虑使用设计更加完善的 [BoneTeX](https://gitee.com/zrr1999/bonetex)（计划在五月前开源）。
+
 本代码库使用了JelteF的[PyLaTex](https://github.com/JelteF/PyLaTeX) 代码并做了一定的修改。
 
 PyTex主要用于简化LaTex的编写，你也可以把它当做一个MarkDown到LaTex代码的转换工具。LaTex语法并不是使用本库必须的要求，但是熟悉LaTex语法有助于更好的使用本库。
