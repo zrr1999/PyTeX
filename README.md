@@ -3,7 +3,7 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 ![Upload Python Package](https://github.com/zrr1999/PyTex/workflows/Upload%20Python%20Package/badge.svg)
 
-本代码仓库已经不再进行维护，有使用Python代码生成LaTeX需求的用户可以考虑使用设计更加完善的 [BoneTeX](https://gitee.com/zrr1999/bonetex)。
+本代码仓库已经不再进行维护，有使用Python代码生成LaTeX需求的用户可以考虑使用设计更加完善的 [Boneratir](https://gitee.com/zrr1999/bonerator)。
 
 本代码库使用了JelteF的[PyLaTex](https://github.com/JelteF/PyLaTeX) 代码并做了一定的修改。
 
